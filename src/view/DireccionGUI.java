@@ -6,13 +6,18 @@
 package view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.dao.DatosEmpleadosDao;
 import model.dao.DatosSedesDao;
+import model.dao.DatosUsuarioDao;
 import model.vo.DatosEmpleados;
 import model.vo.DatosSedes;
+import model.vo.DatosUsuario;
+import view.modifyempleado.UsuarioGUI;
 
 /**
  *
@@ -26,13 +31,105 @@ public class DireccionGUI extends javax.swing.JFrame {
      */
     DatosSedesDao d = new DatosSedesDao();
     DatosSedes dSede = new DatosSedes();
+    private JTextField tfConfirmarDir;
+    private JTextField tfdireccionAct;
+    private JTextField tfDireccionAct;
     public DireccionGUI() {
         initComponents();
                 
                  
-      
+      // ATEIBUTOS
+ 
     }
-  
+     public void setTfConfirmarDir(JTextField tfConfirmarDir) {
+        this.tfConfirmarDir = tfConfirmarDir;
+    }
+    
+    public JTextField getTfDireccionAct() {
+        return tfDireccionAct;
+     }   
+    public JTextField getTfConfirmarDir() {
+        return tfConfirmarDir;
+     }  
+     public void setTfDireccionAct(JTextField tfDireccionAct) {
+        this.tfDireccionAct = tfDireccionAct;
+    }
+     
+        public void modificarSedes() throws SQLException{
+        //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
+        DatosSedesDao c = new DatosSedesDao();
+        
+        //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
+        ArrayList<DatosSedes> lista = c.listaSedes();
+        
+         
+        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
+        String[][] lista2 = formatoModificar(lista, 3);
+        int existeDireccion= c.existeDireccion (getTfConfirmarDir().getText());
+        
+        
+        String DireccionAct="";
+        String confirmarDireccion="";
+        
+        for(int i = 0; i<lista.size(); i++){
+            
+            if(lista2[i][1].equals(getTfDireccionAct().getText())){
+                DireccionAct=lista2[i][1];
+            }
+            if(lista2[i][2].equals(getTfConfirmarDir().getText())){
+                confirmarDireccion=lista2[i][2];
+            }
+        }
+        
+        if(getTfDireccionAct().getText().length()!=0
+                && getTfDireccionAct().getText().length()!=0
+                && getTfConfirmarDir().getText().length()!=0){
+            if(DireccionAct.equals(getTfDireccionAct().getText())){
+                if(confirmarDireccion.equals(getTfConfirmarDir().getText())){
+                    if(!getTfDireccionAct().getText().equals(getTfConfirmarDir().getText())){
+                        if(existeDireccion==0){
+                            try {
+                                DatosSedes usuarioActualizar = new DatosSedes(); 
+
+                                usuarioActualizar.setUsuarioNuevo(getTfUsuarioNuevo().getText());
+                                usuarioActualizar.setDireccionAct(getTfDireccionAct().getText());
+                                usuarioActualizar.setContrasenia(getTfConfirmarDir().getText());
+
+                                DatosUsuario usuarioActualizado =null;
+                                DatosUsuarioDao d = new DatosUsuarioDao();
+                                
+                                usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
+                                
+                                if(usuarioActualizado != null){
+                                    JOptionPane.showMessageDialog(null, "El usuario del empleado se actualizó correctamente");
+                                    this.setVisible(false);
+                                    ModificacionEmpleadosGUI modificacion = new ModificacionEmpleadosGUI();
+                                    modificacion.setVisible(true);
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El usuario no está disponible. Intente con uno nuevo");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El nuevo usuario no puede ser igual al anterior");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Contraseña no valida");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuario Anterior Incorrecto");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Los datos no pueden estar vacios");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,13 +144,13 @@ public class DireccionGUI extends javax.swing.JFrame {
         titulo1 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        tfConfirmarmod = new javax.swing.JTextField();
+        TfConfirmarDir = new javax.swing.JTextField();
         titulo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnRegistrar1 = new javax.swing.JButton();
         tfSedemod = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        tfDireccionmod = new javax.swing.JTextField();
+        TfDireccionAct = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,15 +175,15 @@ public class DireccionGUI extends javax.swing.JFrame {
         jLabel17.setText("Confirmar direccion:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
 
-        tfConfirmarmod.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfConfirmarmod.setForeground(new java.awt.Color(153, 153, 153));
-        tfConfirmarmod.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfConfirmarmod.addActionListener(new java.awt.event.ActionListener() {
+        TfConfirmarDir.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        TfConfirmarDir.setForeground(new java.awt.Color(153, 153, 153));
+        TfConfirmarDir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        TfConfirmarDir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfConfirmarmodActionPerformed(evt);
+                TfConfirmarDirActionPerformed(evt);
             }
         });
-        jPanel2.add(tfConfirmarmod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 170, 25));
+        jPanel2.add(TfConfirmarDir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         titulo.setForeground(new java.awt.Color(153, 153, 153));
@@ -126,10 +223,10 @@ public class DireccionGUI extends javax.swing.JFrame {
         jLabel18.setText("Direccion actual:");
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, 20));
 
-        tfDireccionmod.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfDireccionmod.setForeground(new java.awt.Color(153, 153, 153));
-        tfDireccionmod.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfDireccionmod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 170, 25));
+        TfDireccionAct.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        TfDireccionAct.setForeground(new java.awt.Color(153, 153, 153));
+        TfDireccionAct.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(TfDireccionAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 170, 25));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,8 +254,8 @@ public class DireccionGUI extends javax.swing.JFrame {
     private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
         String sede, direccionActual, direccionConfir;
         sede = tfSedemod.getText();
-        direccionActual = tfDireccionmod.getText();
-        direccionConfir = tfConfirmarmod.getText();
+        direccionActual = TfDireccionAct.getText();
+        direccionConfir = TfConfirmarDir.getText();
         try {
             d.actualizarSede(dSede);
         } catch (SQLException ex) {
@@ -168,9 +265,9 @@ public class DireccionGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnRegistrar1ActionPerformed
 
-    private void tfConfirmarmodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfConfirmarmodActionPerformed
+    private void TfConfirmarDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfConfirmarDirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfConfirmarmodActionPerformed
+    }//GEN-LAST:event_TfConfirmarDirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +305,8 @@ public class DireccionGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TfConfirmarDir;
+    private javax.swing.JTextField TfDireccionAct;
     private javax.swing.JButton btnRegistrar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel12;
@@ -215,10 +314,16 @@ public class DireccionGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tfConfirmarmod;
-    private javax.swing.JTextField tfDireccionmod;
     private javax.swing.JTextField tfSedemod;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
+
+   
 }
+
+//sett
+ //public int getmodificarUsuario();
+  //  return modificarUsuario;
+
+//getter

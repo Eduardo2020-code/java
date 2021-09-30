@@ -25,9 +25,10 @@ public class SedeGUI extends javax.swing.JFrame {
      */
     public SedeGUI() {
         initComponents();
+    
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,7 +141,9 @@ public class SedeGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+  
+    
+    
     private void rbtnDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnDireccionActionPerformed
         DireccionGUI a = new DireccionGUI();
         a.setVisible(true);

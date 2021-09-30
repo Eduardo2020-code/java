@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import model.vo.DatosSedes;
 import model.vo.DatosUsuario;
 import util.JDBCUtilities;
 
@@ -122,6 +123,10 @@ public class DatosUsuarioDao {
             }
         }
         return usuarioActualizado;
+    }
+
+    public DatosUsuario actualizarUsuario(DatosSedes usuarioActualizar) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

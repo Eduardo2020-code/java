@@ -5,6 +5,8 @@
  */
 package model.vo;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author usuario
@@ -17,6 +19,7 @@ public class DatosSedes {
     private String barrio_sede;
     private String ciudad_sede;
     private String telefono_sede;
+    private JTextField tfDireccionAct;
    
     public DatosSedes(){
     
@@ -71,7 +74,20 @@ public class DatosSedes {
     public void setTelefono_sede(String telefono_sede) {
         this.telefono_sede = telefono_sede;
     }
+
+    public void setUsuarioAnt(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setDireccionAct(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setContrasenia(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
+   
     
 }
