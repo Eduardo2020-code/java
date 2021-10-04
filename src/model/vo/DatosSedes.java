@@ -34,6 +34,16 @@ public class DatosSedes {
         this.telefono_sede=telefono_sede;
         
     }
+    
+    public DatosSedes( String direccion_sede, String barrio_sede, String ciudad_sede, String telefono_sede){
+        this.direccion_sede=direccion_sede;
+        this.barrio_sede=barrio_sede;
+        this.ciudad_sede=ciudad_sede;
+        this.telefono_sede=telefono_sede;
+        
+    }
+    
+    
 
     public String getId_sede() {
         return id_sede;

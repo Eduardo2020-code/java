@@ -13,9 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import model.dao.DatosContraseniaDao;
-import model.vo.DatosContrasenia;
-
+import model.dao.DatosEmpleadosDao;
+import model.vo.DatosEmpleados;
 /**
  *
  * @author usuario
@@ -36,78 +35,41 @@ public class ContraseniaGUI extends javax.swing.JFrame {
         this.setResizable(false);
         
         
-    }
-
-    public JPasswordField getTfContraseniaAnt() {
-        return tfContraseniaAnt;
-    }
-
-    public void setTfContraseniaAnt(JPasswordField tfContraseniaAnt) {
-        this.tfContraseniaAnt = tfContraseniaAnt;
-    }
-
-    public JPasswordField getTfContraseniaNueva() {
-        return tfContraseniaNueva;
-    }
-
-    public void setTfContraseniaNueva(JPasswordField tfContraseniaNueva) {
-        this.tfContraseniaNueva = tfContraseniaNueva;
-    }
-
-    public JPasswordField getTfContraseniaNueva2() {
-        return tfContraseniaNueva2;
-    }
-
-    public void setTfContraseniaNueva2(JPasswordField tfContraseniaNueva2) {
-        this.tfContraseniaNueva2 = tfContraseniaNueva2;
-    }
-
-    public JTextField getTfUsuario() {
-        return tfUsuario;
-    }
-
-    public void setTfUsuario(JTextField tfUsuario) {
-        this.tfUsuario = tfUsuario;
-    }
-
+    }  
     
-    
-    public void actualizarContrasenia(){
+    public void actualizarContrasenia() throws SQLException{
         //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
-        DatosContraseniaDao c = new DatosContraseniaDao();
+        DatosEmpleadosDao c = new DatosEmpleadosDao();
         
         //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
-        ArrayList<DatosContrasenia> lista = c.listaContrasenia();
+        ArrayList<DatosEmpleados> lista = c.datosModificacionContrasenia();
         
         //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
-        String[][] lista2 = formatoRegistros(lista, 3);
+        String[][] lista2 = formatoRegistros(lista);
         
         String usuario="";
-        String contraseniaAnt="";
+        String contraAnt="";
         
         for(int i = 0; i<lista.size(); i++){
-            
-            if(lista2[i][0].equals(getTfUsuario().getText())){
+            if(lista2[i][0].equals(tfUsuario.getText())){
                 usuario=lista2[i][0];
-            }
-            if(lista2[i][1].equals(getTfContraseniaAnt().getText())){
-                contraseniaAnt=lista2[i][1];
+                contraAnt=lista2[i][1];
             }
         }
             
-        if(usuario.equals(getTfUsuario().getText())){
-            if(contraseniaAnt.equals(getTfContraseniaAnt().getText())){
-                if(!getTfContraseniaAnt().getText().equals(getTfContraseniaNueva().getText())){
-                    if(getTfContraseniaNueva().getText().equals(getTfContraseniaNueva2().getText())){
+        if(usuario.equals(tfUsuario.getText())){
+            if(contraAnt.equals(tfContraseniaAnt.getText())){
+                if(!tfContraseniaAnt.getText().equals(tfContraseniaNueva.getText())){
+                    if(tfContraseniaNueva.getText().equals(tfContraseniaNueva2.getText())){
                         try {
-                            DatosContrasenia contraseniaActualizar = new DatosContrasenia();
+                            DatosEmpleados contraseniaActualizar = new DatosEmpleados();
 
-                            contraseniaActualizar.setContraseniaNueva(getTfContraseniaNueva().getText());
-                            contraseniaActualizar.setUsuario(getTfUsuario().getText());
-                            contraseniaActualizar.setContraseniaAnt(getTfContraseniaAnt().getText());
+                            contraseniaActualizar.setContraseniaNueva(tfContraseniaNueva.getText());
+                            contraseniaActualizar.setUsuario(tfUsuario.getText());
+                            contraseniaActualizar.setContrasenia(tfContraseniaAnt.getText());
 
-                            DatosContrasenia contraseniaActualizado =null;
-                            DatosContraseniaDao d = new DatosContraseniaDao();
+                            DatosEmpleados contraseniaActualizado =null;
+                            DatosEmpleadosDao d = new DatosEmpleadosDao();
 
                             contraseniaActualizado = d.actualizarContrasenia(contraseniaActualizar);
 
@@ -138,17 +100,15 @@ public class ContraseniaGUI extends javax.swing.JFrame {
     }
     
     
-    public String[][] formatoRegistros(ArrayList<DatosContrasenia> consulta, int numeroColumnas){
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
         
         //Declaración del contenedor de retorno
-        String[][] registros = new String[consulta.size()][numeroColumnas];        
-        
+        String[][] registros = new String[consulta.size()][2];        
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {
             registros[i][0] = consulta.get(i).getUsuario();
-            registros[i][1] = consulta.get(i).getContraseniaAnt();
-            registros[i][2] = consulta.get(i).getContraseniaNueva();   
+            registros[i][1] = consulta.get(i).getContrasenia();   
         }
 
         //Retornar registros en formato JTable
@@ -156,8 +116,6 @@ public class ContraseniaGUI extends javax.swing.JFrame {
 
     }
     
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,8 +281,12 @@ public class ContraseniaGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-        actualizarContrasenia();
+        try {
+            // TODO add your handling code here:
+            actualizarContrasenia();
+        } catch (SQLException ex) {
+            Logger.getLogger(ContraseniaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked

@@ -14,9 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import model.dao.DatosEmpleadosDao;
-import model.dao.DatosUsuarioDao;
 import model.vo.DatosEmpleados;
-import model.vo.DatosUsuario;
 
 /**
  *
@@ -40,72 +38,47 @@ public class UsuarioGUI extends javax.swing.JFrame {
         
     }
 
-
-    public JPasswordField getTfContrasenia() {
-        return tfContrasenia;
-    }
-
-    public void setTfContrasenia(JPasswordField tfContrasenia) {
-        this.tfContrasenia = tfContrasenia;
-    }
-
-    public JTextField getTfUsuarioNuevo() {
-        return tfUsuarioNuevo;
-    }
-
-    public void setTfUsuarioNuevo(JTextField tfUsuarioNuevo) {
-        this.tfUsuarioNuevo = tfUsuarioNuevo;
-    }
-
-    public JTextField getTfUsuarioAnt() {
-        return tfUsuarioAnt;
-    }
-
-    public void setTfUsuarioAnt(JTextField tfUsuarioAnt) {
-        this.tfUsuarioAnt = tfUsuarioAnt;
-    }
     
     public void actualizarUsuario() throws SQLException{
         //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
-        DatosUsuarioDao c = new DatosUsuarioDao();
+        DatosEmpleadosDao c = new DatosEmpleadosDao();
         
         //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
-        ArrayList<DatosUsuario> lista = c.listaUsuario();
+        ArrayList<DatosEmpleados> lista = c.datosModificacionUsuario();
         
         
         //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
-        String[][] lista2 = formatoRegistros(lista, 3);
-        int existeUsuario= c.existeUsuario(getTfUsuarioNuevo().getText());
+        String[][] lista2 = formatoRegistros(lista);
+        int existeUsuario= c.existeUsuario(tfUsuarioNuevo.getText());
         
         String usuarioAnt="";
-        String contrasenia="";
+        String contra="";
         
         for(int i = 0; i<lista.size(); i++){
             
-            if(lista2[i][1].equals(getTfUsuarioAnt().getText())){
-                usuarioAnt=lista2[i][1];
-            }
-            if(lista2[i][2].equals(getTfContrasenia().getText())){
-                contrasenia=lista2[i][2];
+            if(lista2[i][0].equals(tfUsuarioAnt.getText())){
+                usuarioAnt=lista2[i][0];
+                contra=lista2[i][1];
             }
         }
-        
-        if(getTfUsuarioAnt().getText().length()!=0
-                && getTfUsuarioNuevo().getText().length()!=0
-                && getTfContrasenia().getText().length()!=0){
-            if(usuarioAnt.equals(getTfUsuarioAnt().getText())){
-                if(contrasenia.equals(getTfContrasenia().getText())){
-                    if(!getTfUsuarioAnt().getText().equals(getTfUsuarioNuevo().getText())){
+        System.out.println("Usuario Anterior: "+usuarioAnt+"\n"+"Contraseña: "+contra);
+        if(tfUsuarioAnt.getText().length()!=0
+                && tfUsuarioNuevo.getText().length()!=0
+                && tfContrasenia.getText().length()!=0){
+            if(usuarioAnt.equals(tfUsuarioAnt.getText())){
+                if(contra.equals(tfContrasenia.getText())){
+                    if(!tfUsuarioAnt.getText().equals(tfUsuarioNuevo.getText())){
                         if(existeUsuario==0){
                             try {
-                                DatosUsuario usuarioActualizar = new DatosUsuario();
+                                
+                                String usuarioNuevo = tfUsuarioNuevo.getText();
+                                String usuarioAnterior = tfUsuarioAnt.getText();
+                                String contrasenia = tfContrasenia.getText();
+                                
+                                DatosEmpleados usuarioActualizar = new DatosEmpleados(usuarioNuevo, usuarioAnterior, contrasenia);
 
-                                usuarioActualizar.setUsuarioNuevo(getTfUsuarioNuevo().getText());
-                                usuarioActualizar.setUsuarioAnt(getTfUsuarioAnt().getText());
-                                usuarioActualizar.setContrasenia(getTfContrasenia().getText());
-
-                                DatosUsuario usuarioActualizado =null;
-                                DatosUsuarioDao d = new DatosUsuarioDao();
+                                DatosEmpleados usuarioActualizado =null;
+                                DatosEmpleadosDao d = new DatosEmpleadosDao();
                                 
                                 usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
                                 
@@ -120,8 +93,6 @@ public class UsuarioGUI extends javax.swing.JFrame {
                             } catch (SQLException ex) {
                                 Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
                             }
-
-                            
                         }else{
                             JOptionPane.showMessageDialog(null, "El usuario no está disponible. Intente con uno nuevo");
                         }
@@ -140,22 +111,19 @@ public class UsuarioGUI extends javax.swing.JFrame {
     }
     
     
-    public String[][] formatoRegistros(ArrayList<DatosUsuario> consulta, int numeroColumnas){
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
         
         //Declaración del contenedor de retorno
-        String[][] registros = new String[consulta.size()][numeroColumnas];        
+        String[][] registros = new String[consulta.size()][2];        
         
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {
-            registros[i][0] = consulta.get(i).getUsuarioNuevo();
-            registros[i][1] = consulta.get(i).getUsuarioAnt();
-            registros[i][2] = consulta.get(i).getContrasenia();   
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContrasenia();   
         }
-
         //Retornar registros en formato JTable
         return registros;
-
     }
     
 

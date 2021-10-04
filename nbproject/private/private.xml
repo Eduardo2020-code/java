@@ -3,23 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/vo/DatosContrasenia.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/view/DireccionGUI.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/vo/Factura.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/view/Factura.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/vo/DatosEmpleados.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/vo/DatosUsuario.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/dao/DatosSedesDao.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/view/CuidadGUI.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/vo/DatosSedes.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/util/JDBCUtilities.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/view/ModificacionEmpleadosGUI.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/dao/DatosEmpleadosDao.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/view/SedeGUI.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/dao/DatosUsuarioDao.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/view/modifyempleado/UsuarioGUI.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/model/dao/DatosContraseniaDao.java</file>
-            <file>file:/C:/Users/Windows%2010/Documents/PROYECTO%20DESARROLLO%20SOFTWARE/proyecto/src/controller/Controlador.java</file>
+            <file>file:/C:/Users/Juan%20Diego/Documents/PROYECTO%20DESARROLLO/java/src/view/RegistroSedesGUI.java</file>
+            <file>file:/C:/Users/Juan%20Diego/Documents/PROYECTO%20DESARROLLO/java/src/controller/Controlador.java</file>
         </group>
     </open-files>
 </project-private>

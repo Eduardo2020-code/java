@@ -43,88 +43,30 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         
         
     }
-
-    public JComboBox<String> getCbCargo() {
-        return cbCargo;
-    }
-
-    public void setCbCargo(JComboBox<String> cbCargo) {
-        this.cbCargo = cbCargo;
-    }
-
-    public JComboBox<String> getCbId_sede() {
-        return cbId_sede;
-    }
-
-    public void setCbId_sede(JComboBox<String> cbId_sede) {
-        this.cbId_sede = cbId_sede;
-    }
-
-    public JTextField getTfCiudad() {
-        return tfCiudad;
-    }
-
-    public void setTfCiudad(JTextField tfCiudad) {
-        this.tfCiudad = tfCiudad;
-    }
-
-    public JPasswordField getTfContrasenia() {
-        return tfContrasenia;
-    }
-
-    public void setTfContrasenia(JPasswordField tfContrasenia) {
-        this.tfContrasenia = tfContrasenia;
-    }
-
-    public JPasswordField getTfContrasenia2() {
-        return tfContrasenia2;
-    }
-
-    public void setTfContrasenia2(JPasswordField tfContrasenia2) {
-        this.tfContrasenia2 = tfContrasenia2;
-    }
-
-    public JTextField getTfDireccion() {
-        return tfDireccion;
-    }
-
-    public void setTfDireccion(JTextField tfDireccion) {
-        this.tfDireccion = tfDireccion;
-    }
-
-    public JTextField getTfNombre() {
-        return tfNombre;
-    }
-
-    public void setTfNombre(JTextField tfNombre) {
-        this.tfNombre = tfNombre;
-    }
-
-    public JTextField getTfNum_cedula() {
-        return tfNum_cedula;
-    }
-
-    public void setTfNum_cedula(JTextField tfNum_cedula) {
-        this.tfNum_cedula = tfNum_cedula;
-    }
-
-    public JTextField getTfTelefono() {
-        return tfTelefono;
-    }
-
-    public void setTfTelefono(JTextField tfTelefono) {
-        this.tfTelefono = tfTelefono;
-    }
-
-    public JTextField getTfUsuario() {
-        return tfUsuario;
-    }
-
-    public void setTfUsuario(JTextField tfUsuario) {
-        this.tfUsuario = tfUsuario;
-    }
     
     public void registrarEmpleado(){
+        
+        DatosEmpleadosDao c = new DatosEmpleadosDao();
+        
+        //Este objeto es el que tiene los datos de la base de datos pero para la verificacion
+        ArrayList<DatosEmpleados> lista = c.datosRegistroEmpleados();
+        
+        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
+        String[][] lista2 = formatoRegistros(lista);
+        
+        String user="";
+        String num_cedula="";
+        
+        for(int i = 0; i<lista.size(); i++){
+            if(lista2[i][0].equals(tfUsuario.getText())){
+                user=lista2[i][0];
+                num_cedula=lista2[i][1];
+            }
+            if(lista2[i][1].equals(tfNum_cedula.getText())){
+                num_cedula=lista2[i][1];
+            }
+        }
+        System.out.println("Numero de cedula: "+num_cedula);
         if(tfUsuario.getText().length()!=0
                 && tfContrasenia.getText().length()!=0
                 && tfNombre.getText().length()!=0
@@ -132,43 +74,50 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
                 && tfTelefono.getText().length()!=0
                 && tfDireccion.getText().length()!=0
                 && tfCiudad.getText().length()!=0){
-            if(tfContrasenia.getText().equals(tfContrasenia2.getText())){
+            if(!user.equals(tfUsuario.getText())){
+                if(!num_cedula.equals(tfNum_cedula.getText())){
+                    if(tfContrasenia.getText().equals(tfContrasenia2.getText())){
                 
-                DatosEmpleados nuevoEmpleado = new DatosEmpleados();
-                
-                nuevoEmpleado.setUsuario(getTfUsuario().getText());
-                nuevoEmpleado.setContrasenia(getTfContrasenia().getText());
-                nuevoEmpleado.setNombre(getTfNombre().getText());
-                nuevoEmpleado.setNum_cedula(getTfNum_cedula().getText());
-                nuevoEmpleado.setTelefono(getTfTelefono().getText());
-                nuevoEmpleado.setDireccion(getTfDireccion().getText());
-                nuevoEmpleado.setCiudad(getTfCiudad().getText());
-                nuevoEmpleado.setCargo((String) getCbCargo().getSelectedItem());
-                nuevoEmpleado.setId_sede((String)getCbId_sede().getSelectedItem());
-                
-                
-                //Se solicita que se registre un elemento de tipo empleado
-                DatosEmpleados empleadoRegistrado = null;
-                DatosEmpleadosDao d = new DatosEmpleadosDao();
-                
-                try {
-                    empleadoRegistrado = d.registrarEmpleado(nuevoEmpleado);
-                    this.setVisible(false);
-                    ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
-                    consulta.setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(RegistroEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                //Reportar exito de la accion
-                if(empleadoRegistrado != null){
-                    JOptionPane.showMessageDialog(null, "El empleado se registró correctamente");
+                        DatosEmpleados nuevoEmpleado = new DatosEmpleados();
+
+                        nuevoEmpleado.setUsuario(tfUsuario.getText());
+                        nuevoEmpleado.setContrasenia(tfContrasenia.getText());
+                        nuevoEmpleado.setNombre(tfNombre.getText());
+                        nuevoEmpleado.setNum_cedula(tfNum_cedula.getText());
+                        nuevoEmpleado.setTelefono(tfTelefono.getText());
+                        nuevoEmpleado.setDireccion(tfDireccion.getText());
+                        nuevoEmpleado.setCiudad(tfCiudad.getText());
+                        nuevoEmpleado.setCargo((String) cbCargo.getSelectedItem());
+                        nuevoEmpleado.setId_sede((String) cbId_sede.getSelectedItem());
+
+
+                        //Se solicita que se registre un elemento de tipo empleado
+                        DatosEmpleados empleadoRegistrado = null;
+                        DatosEmpleadosDao d = new DatosEmpleadosDao();
+
+                        try {
+                            empleadoRegistrado = d.registrarEmpleado(nuevoEmpleado);
+                            this.setVisible(false);
+                            ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
+                            consulta.setVisible(true);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(RegistroEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        //Reportar exito de la accion
+                        if(empleadoRegistrado != null){
+                            JOptionPane.showMessageDialog(null, "El empleado se registró correctamente");
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se completó el registro");
+                        }
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Las contraseñas no concuerdan");
+                    }
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se completó el registro");
+                    JOptionPane.showMessageDialog(null, "La cedula ya se encuentra registrada, verifique los datos");
                 }
-                
-            }else {
-                JOptionPane.showMessageDialog(null, "Las contraseñas no concuerdan");
+            }else{
+                JOptionPane.showMessageDialog(null, "El usuario ya esta registrado, intente con otro diferente");
             }
         }else{
             JOptionPane.showMessageDialog(null, "No pueden haber elementos vacios");
@@ -176,23 +125,16 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
     }
     
     
-    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta, int numeroColumnas){
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
         
         //Declaración del contenedor de retorno
-        String[][] registros = new String[consulta.size()][numeroColumnas];        
+        String[][] registros = new String[consulta.size()][2];        
         
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {            
             registros[i][0] = consulta.get(i).getUsuario();
-            registros[i][1] = consulta.get(i).getNombre();
-            registros[i][2] = consulta.get(i).getNum_cedula();
-            registros[i][3] = consulta.get(i).getTelefono();
-            registros[i][4] = consulta.get(i).getDireccion();
-            registros[i][5] = consulta.get(i).getCiudad();
-            registros[i][6] = consulta.get(i).getCargo();
-            registros[i][7] = consulta.get(i).getId_sede();
-            
+            registros[i][1] = consulta.get(i).getNum_cedula();
         }
 
         //Retornar registros en formato JTable

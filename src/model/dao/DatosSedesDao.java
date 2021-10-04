@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import model.vo.DatosEmpleados;
 import model.vo.DatosSedes;
 import util.JDBCUtilities;
 
@@ -50,6 +49,47 @@ public class DatosSedesDao {
             JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
         }
         return respuesta;
+    }
+    
+    public DatosSedes registrarSede(DatosSedes nuevaSede) throws SQLException{
+        DatosSedes sedeRegistrada = null;
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "INSERT INTO sede(dir_sede, barrio_sede,"
+                    + "ciudad_sede, tel_sede) VALUES(?,?,?,?)";
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            statement.setString(1, nuevaSede.getDireccion_sede());
+            statement.setString(2, nuevaSede.getBarrio_sede());
+            statement.setString(3, nuevaSede.getCiudad_sede());
+            statement.setString(4, nuevaSede.getTelefono_sede());
+            
+
+            //Realizar la actualización: Crear material
+            statement.executeUpdate();
+
+            //Cerrar interacciones con BD            
+            statement.close();
+
+            //Si el proceso fue exitoso cambiar el estado
+            sedeRegistrada = nuevaSede;
+
+        }catch(SQLException e){
+            System.err.println("Error registrando empleado! "+e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+
+        //Retornar la instancia del material o el nulo para validaciones posteriores
+        return sedeRegistrada; 
     }
     
     public DatosSedes actualizarSede(DatosSedes modificarSede ) throws SQLException{

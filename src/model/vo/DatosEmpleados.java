@@ -22,6 +22,11 @@ public class DatosEmpleados {
     private String ciudad;
     private String cargo;
     private String id_sede;
+    
+    private String usuarioNuevo;
+    private String contraseniaNueva;
+    private String nombreNuevo;
+    private String telefonoNuevo;
 
     public DatosEmpleados(){
         
@@ -40,6 +45,19 @@ public class DatosEmpleados {
         this.cargo=cargo;
         this.id_sede=id_sede;
     }
+    
+    /**
+     *
+     * @param usuarioNuevo
+     * @param usuario
+     * @param contrasenia
+     */
+    public DatosEmpleados(String usuarioNuevo, String usuario, String contrasenia){
+        this.usuarioNuevo=usuarioNuevo;
+        this.usuario=usuario;
+        this.contrasenia=contrasenia;
+    }
+   
     
     public int getId_empleado() {
         return id_empleado;
@@ -120,5 +138,42 @@ public class DatosEmpleados {
     public void setId_sede(String id_sede) {
         this.id_sede = id_sede;
     }
+
+    public String getUsuarioNuevo() {
+        return usuarioNuevo;
+    }
+
+    public void setUsuarioNuevo(String usuarioNuevo) {
+        this.usuarioNuevo = usuarioNuevo;
+    }
+
+    public String getContraseniaNueva() {
+        return contraseniaNueva;
+    }
+
+    public void setContraseniaNueva(String contraseniaNueva) {
+        this.contraseniaNueva = contraseniaNueva;
+    }
+
+    public String getNombreNuevo() {
+        return nombreNuevo;
+    }
+
+    public void setNombreNuevo(String nombreNuevo) {
+        this.nombreNuevo = nombreNuevo;
+    }
+
+    public String getTelefonoNuevo() {
+        return telefonoNuevo;
+    }
+
+    public void setTelefonoNuevo(String telefonoNuevo) {
+        this.telefonoNuevo = telefonoNuevo;
+    }
+
+    
+    
+    
+    
     
 }

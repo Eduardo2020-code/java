@@ -37,6 +37,10 @@ public class PagoEnvio  {
         this.cliente=cliente;
         this.destino=destino;       
     }
+
+    public PagoEnvio() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public String getNopaquete() {
         return Nopaquete;
     }

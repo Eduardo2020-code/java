@@ -30,7 +30,7 @@ public class Factura extends javax.swing.JFrame implements Printable
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        tbImprimir = new javax.swing.JToggleButton();
         tfUsuario3 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
@@ -72,15 +72,15 @@ public class Factura extends javax.swing.JFrame implements Printable
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 470, -1));
 
         jLabel5.setText("GRACIAS POR TU COMPRA!!");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 140, -1));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 170, -1));
 
-        jToggleButton1.setText("IMPRIMIR");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        tbImprimir.setText("IMPRIMIR");
+        tbImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IMPRIME(evt);
             }
         });
-        jPanel3.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, -1, -1));
+        jPanel3.add(tbImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, -1, -1));
 
         tfUsuario3.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         tfUsuario3.setForeground(new java.awt.Color(153, 153, 153));
@@ -124,6 +124,7 @@ public class Factura extends javax.swing.JFrame implements Printable
     }// </editor-fold>//GEN-END:initComponents
 
     private void IMPRIME(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMPRIME
+        tbImprimir.setVisible(false);
         try
             { 
               PrinterJob  gap = PrinterJob.getPrinterJob();
@@ -189,7 +190,7 @@ public class Factura extends javax.swing.JFrame implements Printable
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton tbImprimir;
     private javax.swing.JTextField tfUsuario3;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables

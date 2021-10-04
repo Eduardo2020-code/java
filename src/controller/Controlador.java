@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.dao.DatosEmpleadosDao;
-import model.dao.DatosUsuarioDao;
 import model.vo.DatosEmpleados;
-import model.vo.DatosUsuario;
 import view.ConsultaEmpleadosGUI;
 import view.ModificacionEmpleadosGUI;
 import view.RegistroEmpleadosGUI;
@@ -24,7 +22,6 @@ public class Controlador {
     
     //Atributos objetos del modelo
     private final DatosEmpleadosDao datosEmpleadosDao;
-    private final DatosUsuarioDao datosUsuarioDao;
     
     //Atributos vista o interfaz
     private final ConsultaEmpleadosGUI consultaEmpleadosGUI;
@@ -33,7 +30,6 @@ public class Controlador {
     
     public Controlador(){
         this.datosEmpleadosDao = new DatosEmpleadosDao();
-        this.datosUsuarioDao = new DatosUsuarioDao();
         
         //Instanciar la interfaz principal
         this.consultaEmpleadosGUI = new ConsultaEmpleadosGUI();
@@ -83,10 +79,6 @@ public class Controlador {
         consultaGUI.getTableEmpleados().setModel(tEmpleados);
     
     }*/
-    
-    public ArrayList<DatosUsuario> datosUsuario() throws SQLException{
-        return this.datosUsuarioDao.listaUsuario();
-    }
     
     public void iniciarAplicacion(){
         consultaEmpleadosGUI.setVisible(true);
