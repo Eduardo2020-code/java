@@ -110,6 +110,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
+        btnRegistrar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,7 +131,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableSedes);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 470, 100));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 470, 100));
 
         jPanel2.setLayout(null);
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 470, -1));
@@ -144,11 +145,22 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         titulo1.setToolTipText("");
         jPanel3.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 350, -1));
 
+        btnRegistrar1.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnRegistrar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        btnRegistrar1.setText("Modificar Sede");
+        btnRegistrar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRegistrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnRegistrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 190, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,6 +169,12 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
+       SedeGUI a = new SedeGUI();
+        a.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegistrar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,6 +270,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegistrar1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
