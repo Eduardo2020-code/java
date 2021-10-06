@@ -4,12 +4,16 @@
  * and open the template in the editor.
  */
 package view.paquete;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.dao.DatosPaquetesDao;
 import model.vo.DatosClientes;
 import model.vo.DatosPaquetes;
 import view.ModificacionEmpleadosGUI;
+import view.envio.MedioPagoGUI;
 /**
  *
  * @author usuario
@@ -133,8 +137,6 @@ public class MenuPaquetesGUI extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lTtitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -183,6 +185,7 @@ public class MenuPaquetesGUI extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+<<<<<<< HEAD
         jLabel15.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(238, 112, 82));
         jLabel15.setText("Cancelar");
@@ -199,6 +202,9 @@ public class MenuPaquetesGUI extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSuperchico.png"))); // NOI18N
+=======
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
+>>>>>>> 169135b4c562cc27eae4292dbb03408228fdaa1d
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         lTtitulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
@@ -249,15 +255,17 @@ public class MenuPaquetesGUI extends javax.swing.JFrame {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         // TODO add your handling code here:
+        MedioPagoGUI medio;
+        try {
+            medio = new MedioPagoGUI();
+            this.setVisible(false);
+            medio.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuPaquetesGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }//GEN-LAST:event_btnPagarActionPerformed
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // TODO add your handling code here:
-        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
-        consulta.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -362,8 +370,6 @@ public class MenuPaquetesGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPagar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

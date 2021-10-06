@@ -5,7 +5,6 @@
  */
 package view.cliente;
 
-import view.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -323,12 +322,16 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
         });
         jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 200, 50));
 
+<<<<<<< HEAD
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSuperchico.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 90, 100));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+=======
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
+>>>>>>> 169135b4c562cc27eae4292dbb03408228fdaa1d
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -336,6 +339,9 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         registrarCliente();
+        InformacionClientesGUI cliente = new InformacionClientesGUI();
+        this.setVisible(false);
+        cliente.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void lAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lAtrasMouseClicked

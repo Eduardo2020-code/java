@@ -19,6 +19,7 @@ import model.vo.DatosDestinatarios;
 import model.vo.DatosEnvios;
 import model.vo.DatosPaquetes;
 import view.RegistroEmpleadosGUI;
+import view.cliente.InformacionClientesGUI;
 
 /**
  *
@@ -359,6 +360,11 @@ public class RegistroPaquetesGUI extends javax.swing.JFrame {
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
         jLabel15.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
@@ -582,6 +588,12 @@ public class RegistroPaquetesGUI extends javax.swing.JFrame {
             Logger.getLogger(RegistroPaquetesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnVerificarActionPerformed
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        InformacionClientesGUI cliente = new InformacionClientesGUI();
+        this.setVisible(false);
+        cliente.setVisible(true);
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments

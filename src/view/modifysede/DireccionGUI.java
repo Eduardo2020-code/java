@@ -5,7 +5,10 @@
  */
 package view.modifysede;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +18,9 @@ import model.dao.DatosEmpleadosDao;
 import model.dao.DatosSedesDao;
 import model.vo.DatosEmpleados;
 import model.vo.DatosSedes;
+import util.JDBCUtilities;
 import view.ModificacionEmpleadosGUI;
+import view.RegistroEmpleadosGUI;
 import view.modifyempleado.UsuarioGUI;
 
 /**
@@ -25,110 +30,77 @@ import view.modifyempleado.UsuarioGUI;
 public class DireccionGUI extends javax.swing.JFrame {
    
 
-    /**
-     * Creates new form DireccionGUI
-     */
-    DatosSedesDao d = new DatosSedesDao();
-    DatosSedes dSede = new DatosSedes();
-    private JTextField tfConfirmarDir;
-    private JTextField tfdireccionAct;
-    private JTextField tfDireccionAct;
     public DireccionGUI() {
         initComponents();
+        obtenerSedes();
+
+      }  
+    public void actualizarDireccion() throws SQLException{
+        
+        if( TfConfirmarDir.getText().length()!=0){
+              
                 
-                 
-      // ATEIBUTOS
- 
-    }
-     public void setTfConfirmarDir(JTextField tfConfirmarDir) {
-        this.tfConfirmarDir = tfConfirmarDir;
-    }
-    
-    public JTextField getTfDireccionAct() {
-        return tfDireccionAct;
-     }   
-    public JTextField getTfConfirmarDir() {
-        return tfConfirmarDir;
-     }  
-     public void setTfDireccionAct(JTextField tfDireccionAct) {
-        this.tfDireccionAct = tfDireccionAct;
-    }
-     
-        public void modificarSedes() throws SQLException{
-        //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
-        DatosSedesDao c = new DatosSedesDao();
-        
-        //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
-        ArrayList<DatosSedes> lista = c.listaSedes();
-        
+            DatosSedes direccionActualizar = new DatosSedes();
+
          
-        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
-        String[][] lista2 = formatoModificar(lista, 3);
-        int existeDireccion= c.existeDireccion (getTfConfirmarDir().getText());
-        
-        
-        String DireccionAct="";
-        String confirmarDireccion="";
-        
-        for(int i = 0; i<lista.size(); i++){
-            
-            if(lista2[i][1].equals(getTfDireccionAct().getText())){
-                DireccionAct=lista2[i][1];
-            }
-            if(lista2[i][2].equals(getTfConfirmarDir().getText())){
-                confirmarDireccion=lista2[i][2];
-            }
-        }
-        
-        if(getTfDireccionAct().getText().length()!=0
-                && getTfDireccionAct().getText().length()!=0
-                && getTfConfirmarDir().getText().length()!=0){
-            if(DireccionAct.equals(getTfDireccionAct().getText())){
-                if(confirmarDireccion.equals(getTfConfirmarDir().getText())){
-                    if(!getTfDireccionAct().getText().equals(getTfConfirmarDir().getText())){
-                        if(existeDireccion==0){
-                            try {
-                                DatosSedes usuarioActualizar = new DatosSedes(); 
+            direccionActualizar.setDireccion_sede(TfConfirmarDir.getText());
+            direccionActualizar.setId_sede(Integer.parseInt(cbId_sede.getSelectedItem().toString()));
 
-                                usuarioActualizar.setUsuarioNuevo(getTfUsuarioNuevo().getText());
-                                usuarioActualizar.setDireccionAct(getTfDireccionAct().getText());
-                                usuarioActualizar.setContrasenia(getTfConfirmarDir().getText());
+            DatosSedes sedeActualizada =null;
+            DatosSedesDao d = new DatosSedesDao();
 
-                                DatosUsuario usuarioActualizado =null;
-                                DatosUsuarioDao d = new DatosUsuarioDao();
-                                
-                                usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
-                                
-                                if(usuarioActualizado != null){
-                                    JOptionPane.showMessageDialog(null, "El usuario del empleado se actualizó correctamente");
-                                    this.setVisible(false);
-                                    ModificacionEmpleadosGUI modificacion = new ModificacionEmpleadosGUI();
-                                    modificacion.setVisible(true);
-                                }else{
-                                    JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
-                                }
-                            } catch (SQLException ex) {
-                                Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+            sedeActualizada = d.modificarDireccionSede(direccionActualizar);
 
-                            
-                        }else{
-                            JOptionPane.showMessageDialog(null, "El usuario no está disponible. Intente con uno nuevo");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "El nuevo usuario no puede ser igual al anterior");
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Contraseña no valida");
-                }
+            if(sedeActualizada != null){
+                JOptionPane.showMessageDialog(null, "La direccion de la sede se actualizó correctamente");
+                this.setVisible(false);
+                SedeGUI modificacion = new SedeGUI();
+                modificacion.setVisible(true);
+
             }else{
-                JOptionPane.showMessageDialog(null, "Usuario Anterior Incorrecto");
+                JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Los datos no pueden estar vacios");
-        }
+            JOptionPane.showMessageDialog(null, " Los datos no pueden estar vacios");
+        }    
     }
     
+    
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
+        
+        //Declaración del contenedor de retorno
+        String[][] registros = new String[consulta.size()][2];        
+
+        //Desenvolver los objetos de la colección
+        for (int i = 0; i < consulta.size(); i++) {
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContrasenia();   
+        }
+
+        //Retornar registros en formato JTable
+        return registros;
+
+    }
+    
+    
+    private void obtenerSedes() { 
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        ArrayList<Integer> listaSedes = new ArrayList<>();
+        try {
+            conexion= conex.getConnection();
+            Statement leer = conexion.createStatement();
+            ResultSet resultado = leer.executeQuery("SELECT id_sede FROM sede");
+            while(resultado.next()){
+                listaSedes.add(resultado.getInt(1));
+            }
+            for(int i=0;i<listaSedes.size();i++){
+                cbId_sede.addItem(Integer.toString(listaSedes.get(i)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,15 +113,13 @@ public class DireccionGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         TfConfirmarDir = new javax.swing.JTextField();
         titulo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnRegistrar1 = new javax.swing.JButton();
-        tfSedemod = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        TfDireccionAct = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        cbId_sede = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,11 +133,6 @@ public class DireccionGUI extends javax.swing.JFrame {
         titulo1.setForeground(new java.awt.Color(238, 112, 82));
         titulo1.setText("MODIFICAR DIRECCION DE UNA SEDE ");
         jPanel2.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
-
-        jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel16.setText("Sede:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(238, 112, 82));
@@ -212,20 +177,19 @@ public class DireccionGUI extends javax.swing.JFrame {
         });
         jPanel2.add(btnRegistrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 200, 50));
 
-        tfSedemod.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfSedemod.setForeground(new java.awt.Color(153, 153, 153));
-        tfSedemod.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfSedemod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 170, 25));
+        jLabel19.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel19.setText("ID Sede:");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, 30));
 
-        jLabel18.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel18.setText("Direccion actual:");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, 20));
-
-        TfDireccionAct.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        TfDireccionAct.setForeground(new java.awt.Color(153, 153, 153));
-        TfDireccionAct.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(TfDireccionAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 170, 25));
+        cbId_sede.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        cbId_sede.setForeground(new java.awt.Color(153, 153, 153));
+        cbId_sede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbId_sedeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cbId_sede, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 170, 25));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -251,22 +215,22 @@ public class DireccionGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
-        String sede, direccionActual, direccionConfir;
-        sede = tfSedemod.getText();
-        direccionActual = TfDireccionAct.getText();
-        direccionConfir = TfConfirmarDir.getText();
+    JOptionPane.showMessageDialog( this , "¿Esta seguro de hacer el cambio de sede?", "Modificar Sede" , JOptionPane.INFORMATION_MESSAGE);
         try {
-            d.actualizarSede(dSede);
+             actualizarDireccion();
         } catch (SQLException ex) {
-            Logger.getLogger(DireccionGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CuidadGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JOptionPane.showMessageDialog( this , "¿Esta seguro de hacer el cambio de sede?", "Modificar Sede" , JOptionPane.INFORMATION_MESSAGE);
-        
+         
     }//GEN-LAST:event_btnRegistrar1ActionPerformed
 
     private void TfConfirmarDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfConfirmarDirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TfConfirmarDirActionPerformed
+
+    private void cbId_sedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbId_sedeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbId_sedeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,15 +269,13 @@ public class DireccionGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TfConfirmarDir;
-    private javax.swing.JTextField TfDireccionAct;
     private javax.swing.JButton btnRegistrar1;
+    private javax.swing.JComboBox<String> cbId_sede;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tfSedemod;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
@@ -321,8 +283,4 @@ public class DireccionGUI extends javax.swing.JFrame {
    
 }
 
-//sett
- //public int getmodificarUsuario();
-  //  return modificarUsuario;
 
-//getter

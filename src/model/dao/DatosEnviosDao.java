@@ -90,4 +90,70 @@ public class DatosEnviosDao {
         }
         return respuesta;
     }
+    
+    public ArrayList<DatosEnvios> consultaEnvioTarjeta() throws SQLException{
+        
+        ArrayList<DatosEnvios> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT valor_envio FROM envio "
+                    + "ORDER BY id_envio DESC "
+                    + "LIMIT 1";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosEnvios consulta = new DatosEnvios();
+                consulta.setValor_envio(resultado.getInt(1));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+        return respuesta;
+    }
+    
+    public ArrayList<DatosEnvios> consultaMedioPago() throws SQLException{
+        
+        ArrayList<DatosEnvios> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT id_envio FROM envio "
+                    + "ORDER BY id_envio DESC "
+                    + "LIMIT 1";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosEnvios consulta = new DatosEnvios();
+                consulta.setId_envio(resultado.getInt(1));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+        return respuesta;
+    }
 }

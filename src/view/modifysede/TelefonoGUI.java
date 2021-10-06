@@ -5,7 +5,19 @@
  */
 package view.modifysede;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.dao.DatosSedesDao;
+import model.vo.DatosEmpleados;
+import model.vo.DatosSedes;
+import util.JDBCUtilities;
+import view.RegistroEmpleadosGUI;
 
 /**
  *
@@ -18,6 +30,73 @@ public class TelefonoGUI extends javax.swing.JFrame {
      */
     public TelefonoGUI() {
         initComponents();
+        obtenerSedes();
+    }
+     public void actualizarTelefono() throws SQLException{
+        
+        if( tfTelefono.getText().length()!=0){
+              
+                
+            DatosSedes telefonoActualizar = new DatosSedes();
+
+         
+            telefonoActualizar.setTelefono_sede(tfTelefono.getText());
+            telefonoActualizar.setId_sede(Integer.parseInt(cbId_sede.getSelectedItem().toString()));
+
+            DatosSedes sedeActualizada =null;
+            DatosSedesDao d = new DatosSedesDao();
+
+            sedeActualizada = d.modificarTelefonoSede(telefonoActualizar);
+
+            if(sedeActualizada != null){
+                JOptionPane.showMessageDialog(null, "El telefono de la sede se actualizó correctamente");
+                this.setVisible(false);
+                SedeGUI modificacion = new SedeGUI();
+                modificacion.setVisible(true);
+
+            }else{
+                JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, " Los datos no pueden estar vacios");
+        }    
+    }
+    
+    
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
+        
+        //Declaración del contenedor de retorno
+        String[][] registros = new String[consulta.size()][2];        
+
+        //Desenvolver los objetos de la colección
+        for (int i = 0; i < consulta.size(); i++) {
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContrasenia();   
+        }
+
+        //Retornar registros en formato JTable
+        return registros;
+
+    }
+    
+    
+    private void obtenerSedes() { 
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        ArrayList<Integer> listaSedes = new ArrayList<>();
+        try {
+            conexion= conex.getConnection();
+            Statement leer = conexion.createStatement();
+            ResultSet resultado = leer.executeQuery("SELECT id_sede FROM sede");
+            while(resultado.next()){
+                listaSedes.add(resultado.getInt(1));
+            }
+            for(int i=0;i<listaSedes.size();i++){
+                cbId_sede.addItem(Integer.toString(listaSedes.get(i)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }
 
     /**
@@ -33,12 +112,12 @@ public class TelefonoGUI extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
         btnRegistrar1 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        tfUsuario = new javax.swing.JTextField();
+        tfTelefono = new javax.swing.JTextField();
         titulo = new javax.swing.JLabel();
-        tfUsuario1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        cbId_sede = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,30 +143,20 @@ public class TelefonoGUI extends javax.swing.JFrame {
         });
         jPanel2.add(btnRegistrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 200, 50));
 
-        jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel16.setText("Ingresa el telefono : ");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, -1, -1));
-
         jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(238, 112, 82));
         jLabel17.setText("Confirmar Telefono:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, -1, -1));
 
-        tfUsuario.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, 25));
+        tfTelefono.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfTelefono.setForeground(new java.awt.Color(153, 153, 153));
+        tfTelefono.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         titulo.setForeground(new java.awt.Color(153, 153, 153));
         titulo.setText("Llena los siguientes campos para modificar: ");
         jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, 30));
-
-        tfUsuario1.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario1.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 170, 25));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow.png"))); // NOI18N
@@ -101,14 +170,27 @@ public class TelefonoGUI extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
 
+        jLabel19.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel19.setText("ID Sede:");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, 30));
+
+        cbId_sede.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        cbId_sede.setForeground(new java.awt.Color(153, 153, 153));
+        cbId_sede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbId_sedeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cbId_sede, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 170, 25));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,6 +202,13 @@ public class TelefonoGUI extends javax.swing.JFrame {
 
     private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
         JOptionPane.showMessageDialog( this , "¿Esta seguro de hacer el cambio de sede?", "Modificar Sede" , JOptionPane.INFORMATION_MESSAGE);
+        try {
+             actualizarTelefono();
+        } catch (SQLException ex) {
+            Logger.getLogger(CuidadGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+                      
         
     }//GEN-LAST:event_btnRegistrar1ActionPerformed
 
@@ -128,6 +217,10 @@ public class TelefonoGUI extends javax.swing.JFrame {
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cbId_sedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbId_sedeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbId_sedeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,13 +259,13 @@ public class TelefonoGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar1;
+    private javax.swing.JComboBox<String> cbId_sede;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tfUsuario;
-    private javax.swing.JTextField tfUsuario1;
+    private javax.swing.JTextField tfTelefono;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.dao.DatosSedesDao;
 import model.vo.DatosSedes;
+import view.modifysede.ObtenerSedeGUI;
 
 /**
  *
@@ -35,7 +36,7 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         
     }
     
-    public void registrarEmpleado(){
+    public void registrarSede(){
         
         DatosSedesDao c = new DatosSedesDao();
         
@@ -296,12 +297,15 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        registrarEmpleado();
+        registrarSede();
+        ObtenerSedeGUI sede = new ObtenerSedeGUI();
+        this.setVisible(false);
+        sede.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
+        ObtenerSedeGUI consulta = new ObtenerSedeGUI();
         consulta.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel2MouseClicked

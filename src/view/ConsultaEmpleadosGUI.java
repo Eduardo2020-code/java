@@ -351,6 +351,11 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
         jLabel3.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
@@ -416,6 +421,17 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         consulta.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        try {
+            MenuPrincipalGUI menu = new MenuPrincipalGUI();
+            this.setVisible(false);
+            menu.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

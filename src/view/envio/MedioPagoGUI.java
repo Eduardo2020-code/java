@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.dao.DatosEmpleadosDao;
-import model.vo.DatosEmpleados;
+import model.dao.DatosEnviosDao;
+import model.dao.DatosPagosDao;
+import model.vo.DatosEnvios;
+import model.vo.DatosPagos;
 import view.ModificacionEmpleadosGUI;
+import view.paquete.MenuPaquetesGUI;
 /**
  *
  * @author usuario
@@ -19,12 +22,14 @@ import view.ModificacionEmpleadosGUI;
 public class MedioPagoGUI extends javax.swing.JFrame {
 
     //Atributos
-    
+    int id_envio;
+    String medio_pago="";
     /**
      * Creates new form ConsultaEmpleadosGUI
      */
-    public MedioPagoGUI(){
+    public MedioPagoGUI() throws SQLException{
         initComponents();
+        consultarIdEnvio();
         
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
@@ -34,7 +39,45 @@ public class MedioPagoGUI extends javax.swing.JFrame {
         
     }  
     
+    public void consultarIdEnvio() throws SQLException{
+        DatosEnviosDao c = new DatosEnviosDao();
+        
+        //Este objeto es el que tiene los datos de la base de datos pero para la verificacion
+        ArrayList<DatosEnvios> lista = c.consultaMedioPago();
+        
+        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
+        id_envio=lista.get(0).getId_envio();
+    }
     
+    public void registrarPago(){
+        
+        DatosPagos nuevoPago = new DatosPagos(id_envio, medio_pago);
+        
+        //Se solicita que se registre un elemento de tipo empleado
+        DatosPagos pagoRegistrado = null;
+        DatosPagosDao d = new DatosPagosDao();
+
+        try {
+            pagoRegistrado = d.registrarPago(nuevoPago);
+            this.setVisible(false);
+            if(medio_pago.equals("Efectivo")){
+                EfectivoGUI consulta = new EfectivoGUI();
+            consulta.setVisible(true);
+            }else{
+                TarjetaGUI consulta = new TarjetaGUI();
+                consulta.setVisible(true);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MedioPagoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Reportar exito de la accion
+        if(pagoRegistrado == null){
+            JOptionPane.showMessageDialog(null, "No se completó el registro");
+        }
+               
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -156,26 +199,46 @@ public class MedioPagoGUI extends javax.swing.JFrame {
         lEfectivo1.setText("TARJETA");
         jPanel2.add(lEfectivo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 410));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEfectivoActionPerformed
+        medio_pago="Efectivo";
+        registrarPago();
+        try {
+            EfectivoGUI efectivo = new EfectivoGUI();
+            this.setVisible(false);
+            efectivo.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MedioPagoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btnEfectivoActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
-        consulta.setVisible(true);
+        MenuPaquetesGUI menu = new MenuPaquetesGUI();
         this.setVisible(false);
+        menu.setVisible(true);
+        
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarjetaActionPerformed
-        // TODO add your handling code here:
+        medio_pago="Tarjeta";
+        registrarPago();
+        TarjetaGUI tarjeta;
+        try {
+            tarjeta = new TarjetaGUI();
+            this.setVisible(false);
+            tarjeta.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MedioPagoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnTarjetaActionPerformed
 
     /**
@@ -241,7 +304,11 @@ public class MedioPagoGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MedioPagoGUI().setVisible(true);
+                try {
+                    new MedioPagoGUI().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MedioPagoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
