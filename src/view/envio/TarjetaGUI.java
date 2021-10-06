@@ -321,12 +321,12 @@ public final class TarjetaGUI extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         cbTipo = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
-        jcMes = new com.toedter.calendar.JMonthChooser();
-        jcAnio = new com.toedter.calendar.JYearChooser();
         jSeparator2 = new javax.swing.JSeparator();
         cbCuotas = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
         tfTotalPago = new javax.swing.JTextField();
+        jcMes = new com.toedter.calendar.JMonthChooser();
+        jcAnio = new com.toedter.calendar.JYearChooser();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -473,15 +473,6 @@ public final class TarjetaGUI extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(238, 112, 82));
         jLabel22.setText("Número de cuotas:");
         jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, -1, -1));
-
-        jcMes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jcMes.setForeground(new java.awt.Color(153, 153, 153));
-        jcMes.setFont(new java.awt.Font("Decker", 0, 18));
-        jPanel2.add(jcMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 100, -1));
-
-        jcAnio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jcAnio.setFont(new java.awt.Font("Decker", 0, 18));
-        jPanel2.add(jcAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 320, -1, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 580, 20));
 
         cbCuotas.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
@@ -503,6 +494,8 @@ public final class TarjetaGUI extends javax.swing.JFrame {
         tfTotalPago.setForeground(new java.awt.Color(153, 153, 153));
         tfTotalPago.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(tfTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 170, 25));
+        jPanel2.add(jcMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, -1, -1));
+        jPanel2.add(jcAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 320, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 800, 590));
 
