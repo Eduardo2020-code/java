@@ -224,12 +224,13 @@ public class DatosSedesDao {
         try{
             conexion= conex.getConnection();
 
-            String consulta = "UPDATE sede SET dir_sede=?,barrio_Sede=?,cuidad_Sede=?,tel_sede=? where idSede=? ";
+            String consulta = "UPDATE sede SET tel_sede=? WHERE id_sede=? ";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             
             statement.setString(1, modificarTelefonoSede.getTelefono_sede());
+            statement.setInt(2, modificarTelefonoSede.getId_sede());
             
            
             //statement.setInt(2, (int) Integer.parseInt((String) modificarTelefonoSede.getId_sede()));
@@ -265,13 +266,14 @@ public class DatosSedesDao {
         try{
             conexion= conex.getConnection();
 
-            String consulta = "UPDATE sede SET dir_sede=? where idSede=? ";
+            String consulta = "UPDATE sede SET dir_sede=? WHERE id_sede=? ";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
-
             
             statement.setString(1, modificarDireccionSede.getDireccion_sede());
+            statement.setInt(2, modificarDireccionSede.getId_sede());
             
+
            
             //statement.setInt(2, (int) Integer.parseInt((String) modificarDireccionSede.getId_sede()));
             
@@ -298,4 +300,48 @@ public class DatosSedesDao {
  
 }
 
+ public DatosSedes modificaridsede(DatosSedes modificaridsede) throws SQLException{
+        DatosSedes idsedeActualizar = null;
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "UPDATE sede SET dir_sede=? WHERE id_sede=? ";
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            
+            statement.setInt(1, modificaridsede.getId_sede());
+            statement.setInt(2, modificaridsede.getId_sede());
+            
+
+           
+            //statement.setInt(2, (int) Integer.parseInt((String) modificarDireccionSede.getId_sede()));
+            
+
+            //Realizar la actualización: Crear material
+            statement.executeUpdate();
+
+            //Cerrar interacciones con BD            
+            statement.close();
+
+            //Si el proceso fue exitoso cambiar el estado
+            idsedeActualizar = modificaridsede;
+
+        }catch(SQLException e){
+            System.err.println("Error actualizando sede! "+e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+                 }
+            }
+            //Retornar la instancia del material o el nulo para validaciones posteriores
+        return idsedeActualizar;
+ 
 }
+
+    
+    }
+  

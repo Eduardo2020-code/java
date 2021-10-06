@@ -46,7 +46,6 @@ public class SedeGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
         rbtnId_sede = new javax.swing.JRadioButton();
-        rbtnNombre = new javax.swing.JRadioButton();
         rbtnTelefono = new javax.swing.JRadioButton();
         rbtnDireccion = new javax.swing.JRadioButton();
 
@@ -93,17 +92,6 @@ public class SedeGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(rbtnId_sede, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
-
-        rbtnNombre.setBackground(new java.awt.Color(255, 255, 255));
-        rbtnNombre.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        rbtnNombre.setForeground(new java.awt.Color(238, 112, 82));
-        rbtnNombre.setText("Sede");
-        rbtnNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnNombreActionPerformed(evt);
-            }
-        });
-        jPanel1.add(rbtnNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, -1, -1));
 
         rbtnTelefono.setBackground(new java.awt.Color(255, 255, 255));
         rbtnTelefono.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
@@ -157,12 +145,6 @@ public class SedeGUI extends javax.swing.JFrame {
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rbtnTelefonoActionPerformed
-
-    private void rbtnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNombreActionPerformed
-        idsedeGUI a = new idsedeGUI();
-        a.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_rbtnNombreActionPerformed
 
     private void rbtnId_sedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnId_sedeActionPerformed
         CuidadGUI a = new CuidadGUI();
@@ -237,7 +219,6 @@ public class SedeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton rbtnDireccion;
     private javax.swing.JRadioButton rbtnId_sede;
-    private javax.swing.JRadioButton rbtnNombre;
     private javax.swing.JRadioButton rbtnTelefono;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;

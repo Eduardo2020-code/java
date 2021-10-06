@@ -20,6 +20,8 @@ public class DatosSedes {
     private String ciudad_sede;
     private String telefono_sede;
     private JTextField tfDireccionAct;
+    private String dir_sede;
+    
    
     public DatosSedes(){
     
@@ -76,7 +78,10 @@ public class DatosSedes {
     public void setCiudad_sede(String ciudad_sede) {
         this.ciudad_sede = ciudad_sede;
     }
-
+     public void settel_sede(String tel_sede) {
+        this.telefono_sede = tel_sede;
+     }
+   
     public String getTelefono_sede() {
         return telefono_sede;
     }
@@ -84,16 +89,18 @@ public class DatosSedes {
     public void setTelefono_sede(String telefono_sede) {
         this.telefono_sede = telefono_sede;
     }
-
-    public void setUsuarioAnt(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public void setDireccionAct(String ciudad_sede) {
+        this.ciudad_sede = ciudad_sede;
+    }
+     
+     public String getDireccionsede() {
+        return dir_sede;
+    }
+    public void setConfirmarDir(String dir_sede) {
+        this.dir_sede = dir_sede;
     }
 
-    public void setDireccionAct(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setContrasenia(String text) {
+    public void setTelefono_sede() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
