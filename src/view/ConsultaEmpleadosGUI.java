@@ -424,7 +424,7 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
-            MenuPrincipalGUI menu = new MenuPrincipalGUI();
+            MenuPrincipalGerenteGUI menu = new MenuPrincipalGerenteGUI();
             this.setVisible(false);
             menu.setVisible(true);
         } catch (SQLException ex) {

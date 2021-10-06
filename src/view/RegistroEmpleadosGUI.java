@@ -12,10 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import model.dao.DatosEmpleadosDao;
 import model.vo.DatosEmpleados;
 import util.JDBCUtilities;
@@ -357,7 +354,7 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
 
         cbCargo.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         cbCargo.setForeground(new java.awt.Color(153, 153, 153));
-        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operador", "Contador", "Auxiliar de Operación" }));
+        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operador", "Contador", "Auxiliar de Operación", "Secretaria" }));
         cbCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCargoActionPerformed(evt);

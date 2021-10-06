@@ -3,90 +3,123 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.cliente;
+package view;
 
-import view.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.dao.DatosClientesDao;
-import model.vo.DatosClientes;
-import view.paquete.RegistroPaquetesGUI;
+import model.dao.DatosEmpleadosDao;
+import model.vo.DatosEmpleados;
+
 /**
  *
- * @author Juan Diego Garcia
+ * @author usuario
  */
-public class InformacionClientesGUI extends javax.swing.JFrame {
+public class LoginGUI extends javax.swing.JFrame {
 
     //Atributos
     
     /**
      * Creates new form ConsultaEmpleadosGUI
      */
-    public InformacionClientesGUI(){
+    public LoginGUI(){
         initComponents();
         
         //No olvidar agregar esto para agregarle las animaciones
-        this.setLocationRelativeTo(null);
-        this.setTitle("Clientes");
         this.setResizable(false);
-        btnContinuar.setEnabled(false);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Empleados");
         
         
-    }  
+    }
+
     
-    public void validarCliente() throws SQLException{
+    public void validarUsuario() throws SQLException{
         //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
-        DatosClientesDao c = new DatosClientesDao();
+        DatosEmpleadosDao c = new DatosEmpleadosDao();
         
         //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
-        ArrayList<DatosClientes> lista = c.datosRegistroClientes();
+        ArrayList<DatosEmpleados> lista = c.datosLogin();
+        
         
         //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
-        String[][] lista2 = formatoRegistros(lista);
+        String[][] lista2 = formatoRegistrosLogin(lista);
         
-        String cedula="";
+        String usuario="";
+        String contrasenia="";
+        String cargo="";
         
         for(int i = 0; i<lista.size(); i++){
-            if(lista2[i][0].equals(tfCedula.getText())){
-                cedula=lista2[i][0];
+            
+            if(lista2[i][0].equals(tfUsuario.getText())){
+                usuario=lista2[i][0];
+                contrasenia=lista2[i][1];
+                cargo=lista2[i][2];
             }
         }
         
-        if(tfCedula.getText().length()!=0){
-            if(cedula.equals(tfCedula.getText())){
-                JOptionPane.showMessageDialog(null, "Ya se encuentra registrado, puede continuar");
-                btnContinuar.setEnabled(true);
-                
-                
+        if(tfUsuario.getText().length()!=0
+                && tfContrasenia.getText().length()!=0){
+            if(usuario.equals(tfUsuario.getText())){
+                if(contrasenia.equals(tfContrasenia.getText())){
+                    if(cargo.equals("Operador") || cargo.equals("Auxiliar de Operación")){
+                        JOptionPane.showMessageDialog(null, "¡Bienvenido, señor operador!");
+                        MenuPrincipalOperadorGUI menu = new MenuPrincipalOperadorGUI();
+                        this.setVisible(false);
+                        menu.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "¡Bienvenido!");
+                        MenuPrincipalGerenteGUI menu = new MenuPrincipalGerenteGUI();
+                        this.setVisible(false);
+                        menu.setVisible(true);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Contraseña no valida");
+                }
             }else{
-                JOptionPane.showMessageDialog(null, "Aún no se encuentra registrado");
+                JOptionPane.showMessageDialog(null, "Usuario Incorrecto");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "El campo no puede estar vacio");
+            JOptionPane.showMessageDialog(null, "Los datos no pueden estar vacios");
         }
-            
-        
     }
     
     
-    public String[][] formatoRegistros(ArrayList<DatosClientes> consulta){
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
         
         //Declaración del contenedor de retorno
-        String[][] registros = new String[consulta.size()][1];        
+        String[][] registros = new String[consulta.size()][2];        
+        
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {
-            registros[i][0] = consulta.get(i).getNum_cedula();
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContrasenia();   
         }
-
         //Retornar registros en formato JTable
         return registros;
-
     }
     
+    public String[][] formatoRegistrosLogin(ArrayList<DatosEmpleados> consulta){
+        
+        //Declaración del contenedor de retorno
+        String[][] registros = new String[consulta.size()][3];        
+        
+
+        //Desenvolver los objetos de la colección
+        for (int i = 0; i < consulta.size(); i++) {
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContrasenia(); 
+            registros[i][2] = consulta.get(i).getCargo();
+        }
+        //Retornar registros en formato JTable
+        return registros;
+    }
+    
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,15 +136,13 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        tfCedula = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        tfUsuario = new javax.swing.JTextField();
+        tfContrasenia = new javax.swing.JPasswordField();
         titulo = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnValidar = new javax.swing.JButton();
-        btnContinuar = new javax.swing.JButton();
-        btnRegistrar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,112 +185,61 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel15.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel15.setText("Atrás");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, -1, -1));
-
         jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel16.setText("Número de cédula:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
+        jLabel16.setText("Usuario: ");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
 
-        tfCedula.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfCedula.setForeground(new java.awt.Color(153, 153, 153));
-        tfCedula.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 170, 25));
+        jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel17.setText("Contraseña: ");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, -1, -1));
+
+        tfUsuario.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        tfUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 170, 25));
+
+        tfContrasenia.setForeground(new java.awt.Color(153, 153, 153));
+        tfContrasenia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         titulo.setForeground(new java.awt.Color(238, 112, 82));
-        titulo.setText("INFORMACIÓN DE CLIENTE");
-        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 380, 30));
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
+        titulo.setText("BIENVENIDO A RAPPY ENVIOS");
+        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
-        btnValidar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnValidar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
-        btnValidar.setText("Validar");
-        btnValidar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnValidar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
+        btnModificar.setText("Ingresar");
+        btnModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnValidarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnValidar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 200, 50));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 200, 50));
 
-        btnContinuar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnContinuar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
-        btnContinuar.setText("Continuar");
-        btnContinuar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContinuarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 200, 50));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 370));
 
-        btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        btnRegistrar.setText("Registrar Cliente");
-        btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 200, 50));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 540));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // TODO add your handling code here:
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            MenuPrincipalOperadorGUI menu = new MenuPrincipalOperadorGUI();
-            this.setVisible(false);
-            menu.setVisible(true);
+            // TODO add your handling code here:
+            validarUsuario();
+            //ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
+            //consulta.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(InformacionClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        // TODO add your handling code here:
-        RegistroPaquetesGUI registro = new RegistroPaquetesGUI();
-        registro.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnContinuarActionPerformed
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-        RegistroClientesGUI registro = new RegistroClientesGUI();
-        registro.setVisible(true);
-        this.setVisible(false);
-
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
-        try {
-            validarCliente();
-        } catch (SQLException ex) {
-            Logger.getLogger(InformacionClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnValidarActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,13 +260,13 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InformacionClientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InformacionClientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InformacionClientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InformacionClientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -356,19 +336,16 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InformacionClientesGUI().setVisible(true);
+                new LoginGUI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnContinuar;
-    private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton btnValidar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -376,7 +353,8 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField tfCedula;
+    private javax.swing.JPasswordField tfContrasenia;
+    private javax.swing.JTextField tfUsuario;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

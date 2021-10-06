@@ -84,6 +84,34 @@ public class DatosEmpleadosDao {
         return respuesta;
     }
     
+    public ArrayList<DatosEmpleados> datosLogin(){
+        
+        ArrayList<DatosEmpleados> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT usuario, contrasenia, cargo FROM empleado"
+                    + " WHERE estado=true";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosEmpleados consulta = new DatosEmpleados();
+                consulta.setUsuario(resultado.getString(1));
+                consulta.setContrasenia(resultado.getString(2));
+                consulta.setCargo(resultado.getString(3));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }
+        return respuesta;
+    }
     
     public DatosEmpleados registrarEmpleado(DatosEmpleados nuevoEmpleado) throws SQLException{
         DatosEmpleados empleadoRegistrado = null;

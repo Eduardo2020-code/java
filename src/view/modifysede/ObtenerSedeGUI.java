@@ -5,10 +5,7 @@
  */
 package view.modifysede;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,14 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model.dao.DatosEmpleadosDao;
 import model.dao.DatosSedesDao;
-import model.vo.DatosEmpleados;
 import model.vo.DatosSedes;
-import util.JDBCUtilities;
-import view.MenuPrincipalGUI;
-import view.MenuPrincipalGUI;
-import view.RegistroEmpleadosGUI;
+import view.MenuPrincipalGerenteGUI;
 import view.RegistroSedesGUI;
 
 /**
@@ -205,7 +197,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
-            MenuPrincipalGUI menu = new MenuPrincipalGUI();
+            MenuPrincipalGerenteGUI menu = new MenuPrincipalGerenteGUI();
             this.setVisible(false);
             menu.setVisible(true);
         } catch (SQLException ex) {

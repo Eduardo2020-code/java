@@ -13,7 +13,7 @@ import view.modifysede.ObtenerSedeGUI;
  *
  * @author usuario
  */
-public class MenuPrincipalGUI extends javax.swing.JFrame {
+public class MenuPrincipalOperadorGUI extends javax.swing.JFrame {
 
     //Atributos
     int id_envio;
@@ -21,7 +21,7 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
     /**
      * Creates new form ConsultaEmpleadosGUI
      */
-    public MenuPrincipalGUI() throws SQLException{
+    public MenuPrincipalOperadorGUI() throws SQLException{
         initComponents();
         
         //No olvidar agregar esto para agregarle las animaciones
@@ -52,12 +52,9 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
         btnPaqueteria = new javax.swing.JButton();
         lTtitulo = new javax.swing.JLabel();
         lEfectivo = new javax.swing.JLabel();
-        btnSedes = new javax.swing.JButton();
-        lEfectivo1 = new javax.swing.JLabel();
-        lEfectivo2 = new javax.swing.JLabel();
-        btnEmpleados = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         lEfectivo3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,47 +109,17 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
                 btnPaqueteriaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPaqueteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 180, 170));
+        jPanel2.add(btnPaqueteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 180, 170));
 
         lTtitulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         lTtitulo.setForeground(new java.awt.Color(238, 112, 82));
-        lTtitulo.setText("SECCIONES");
-        jPanel2.add(lTtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 170, 30));
+        lTtitulo.setText("SECCIONES PARA OPERADOR");
+        jPanel2.add(lTtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 430, 30));
 
         lEfectivo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         lEfectivo.setForeground(new java.awt.Color(153, 153, 153));
         lEfectivo.setText("PAQUETERIA");
-        jPanel2.add(lEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, 30));
-
-        btnSedes.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnSedes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/empresa.png"))); // NOI18N
-        btnSedes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnSedes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSedesActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnSedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 180, 170));
-
-        lEfectivo1.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
-        lEfectivo1.setForeground(new java.awt.Color(153, 153, 153));
-        lEfectivo1.setText("SEDES");
-        jPanel2.add(lEfectivo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, -1, 30));
-
-        lEfectivo2.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
-        lEfectivo2.setForeground(new java.awt.Color(153, 153, 153));
-        lEfectivo2.setText("EMPLEADOS");
-        jPanel2.add(lEfectivo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, 30));
-
-        btnEmpleados.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/empleados.png"))); // NOI18N
-        btnEmpleados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmpleadosActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 180, 170));
+        jPanel2.add(lEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, -1, 30));
 
         btnReportes.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reportar.png"))); // NOI18N
@@ -162,12 +129,21 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
                 btnReportesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, 180, 170));
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 180, 170));
 
         lEfectivo3.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         lEfectivo3.setForeground(new java.awt.Color(153, 153, 153));
         lEfectivo3.setText("REPORTES");
-        jPanel2.add(lEfectivo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, -1, 30));
+        jPanel2.add(lEfectivo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, -1, 30));
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cerrar-sesion (1).png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 60, 70));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 590));
 
@@ -182,23 +158,16 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
         cliente.setVisible(true);
     }//GEN-LAST:event_btnPaqueteriaActionPerformed
 
-    private void btnSedesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSedesActionPerformed
-        ObtenerSedeGUI sedes = new ObtenerSedeGUI();
-       this.setVisible(false);
-       sedes.setVisible(true);
-        
-    }//GEN-LAST:event_btnSedesActionPerformed
-
-    private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
-        // TODO add your handling code here:
-        ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
-        this.setVisible(false);
-        consulta.setVisible(true);
-    }//GEN-LAST:event_btnEmpleadosActionPerformed
-
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        LoginGUI menu = new LoginGUI();
+        this.setVisible(false);
+        menu.setVisible(true);
+
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -219,14 +188,78 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipalOperadorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipalOperadorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipalOperadorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipalOperadorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -296,20 +329,19 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new MenuPrincipalGUI().setVisible(true);
+                    new MenuPrincipalOperadorGUI().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(MenuPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MenuPrincipalOperadorGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnPaqueteria;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JButton btnSedes;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -318,8 +350,6 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lEfectivo;
-    private javax.swing.JLabel lEfectivo1;
-    private javax.swing.JLabel lEfectivo2;
     private javax.swing.JLabel lEfectivo3;
     private javax.swing.JLabel lTtitulo;
     // End of variables declaration//GEN-END:variables

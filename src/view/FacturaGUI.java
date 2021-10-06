@@ -244,10 +244,10 @@ public class FacturaGUI extends javax.swing.JFrame implements Printable
         }
         this.setVisible(false);
         try {
-            MenuPrincipalGUI menu = new MenuPrincipalGUI();
+            MenuPrincipalOperadorGUI menu = new MenuPrincipalOperadorGUI();
             menu.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(MenuPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuPrincipalOperadorGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
 

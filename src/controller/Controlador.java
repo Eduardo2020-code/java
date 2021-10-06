@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.dao.DatosEmpleadosDao;
 import model.vo.DatosEmpleados;
-import view.MenuPrincipalGUI;
+import view.LoginGUI;
+import view.MenuPrincipalOperadorGUI;
 import view.ModificacionEmpleadosGUI;
 import view.RegistroEmpleadosGUI;
 /**
@@ -22,7 +23,8 @@ public class Controlador {
     private final DatosEmpleadosDao datosEmpleadosDao;
     
     //Atributos vista o interfaz
-    private final MenuPrincipalGUI menuPrincipalGUI;
+    private final MenuPrincipalOperadorGUI menuPrincipalGUI;
+    private final LoginGUI loginGUI;
     private ModificacionEmpleadosGUI modificacionEmpleadosGUI;
     private RegistroEmpleadosGUI registroEmpleadosGUI;
     
@@ -30,7 +32,8 @@ public class Controlador {
         this.datosEmpleadosDao = new DatosEmpleadosDao();
         
         //Instanciar la interfaz principal
-        this.menuPrincipalGUI = new MenuPrincipalGUI();
+        this.menuPrincipalGUI = new MenuPrincipalOperadorGUI();
+        this.loginGUI = new LoginGUI();
     }
     
     public ArrayList<DatosEmpleados> datosEmpleados() throws SQLException{
@@ -79,6 +82,6 @@ public class Controlador {
     }*/
     
     public void iniciarAplicacion(){
-        menuPrincipalGUI.setVisible(true);
+        loginGUI.setVisible(true);
     }
 }
