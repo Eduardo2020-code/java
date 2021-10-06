@@ -54,13 +54,13 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         }
         System.out.println(dir);
         if(tfDireccion.getText().length()!=0
-                && tfBarrio.getText().length()!=0
+                && tfCiudad.getText().length()!=0
                 && tfTelefono.getText().length()!=0
                 && tfCiudad.getText().length()!=0){
             if(!dir.equals(tfDireccion.getText())){
                 
                 String direccion=tfDireccion.getText();
-                String barrio=tfBarrio.getText();
+                String barrio=tfCiudad.getText();
                 String ciudad=tfCiudad.getText();
                 String telefono=tfTelefono.getText();
                 
@@ -141,12 +141,12 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        tfBarrio = new javax.swing.JTextField();
-        tfCiudad = new javax.swing.JPasswordField();
+        tfCiudad = new javax.swing.JTextField();
         tfTelefono = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         tfDireccion = new javax.swing.JTextField();
         titulo = new javax.swing.JLabel();
+        tfBarrio = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -236,18 +236,14 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         jLabel19.setText("Teléfono:");
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, -1, -1));
 
-        tfBarrio.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfBarrio.setForeground(new java.awt.Color(153, 153, 153));
-        tfBarrio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfBarrio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfBarrioActionPerformed(evt);
-            }
-        });
-        jPanel2.add(tfBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 170, 25));
-
+        tfCiudad.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         tfCiudad.setForeground(new java.awt.Color(153, 153, 153));
         tfCiudad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfCiudadActionPerformed(evt);
+            }
+        });
         jPanel2.add(tfCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 170, 25));
 
         tfTelefono.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
@@ -257,7 +253,7 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
 
         btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        btnRegistrar.setText("Registrar Empleado");
+        btnRegistrar.setText("Registrar Sede");
         btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +277,16 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         titulo.setText("REGISTRO DE SEDE");
         jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
 
+        tfBarrio.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfBarrio.setForeground(new java.awt.Color(153, 153, 153));
+        tfBarrio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfBarrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfBarrioActionPerformed(evt);
+            }
+        });
+        jPanel2.add(tfBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 170, 25));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
@@ -300,13 +306,17 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void tfBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBarrioActionPerformed
+    private void tfCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCiudadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfBarrioActionPerformed
+    }//GEN-LAST:event_tfCiudadActionPerformed
 
     private void tfDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfDireccionActionPerformed
+
+    private void tfBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBarrioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfBarrioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,7 +381,7 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField tfBarrio;
-    private javax.swing.JPasswordField tfCiudad;
+    private javax.swing.JTextField tfCiudad;
     private javax.swing.JTextField tfDireccion;
     private javax.swing.JTextField tfTelefono;
     private javax.swing.JLabel titulo;

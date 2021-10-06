@@ -329,18 +329,6 @@ public class PagoEnvioGUI extends javax.swing.JFrame implements Printable
         // TODO add your handling code here:
     }//GEN-LAST:event_txvalorActionPerformed
 
-    private void txpaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txpaqueteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txpaqueteActionPerformed
-
-    private void txtamanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtamanoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtamanoActionPerformed
-
-    private void txdestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txdestinoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txdestinoActionPerformed
-
     private void txvalorseguroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txvalorseguroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txvalorseguroActionPerformed
@@ -348,6 +336,10 @@ public class PagoEnvioGUI extends javax.swing.JFrame implements Printable
     private void tximpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tximpuestoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tximpuestoActionPerformed
+
+    private void txdestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txdestinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txdestinoActionPerformed
 
     private void txclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txclienteActionPerformed
         // TODO add your handling code here:
@@ -373,6 +365,14 @@ public class PagoEnvioGUI extends javax.swing.JFrame implements Printable
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtamanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtamanoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtamanoActionPerformed
+
+    private void txpaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txpaqueteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txpaqueteActionPerformed
 
     private void txidenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txidenvioActionPerformed
         // TODO add your handling code here:

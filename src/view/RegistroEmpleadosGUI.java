@@ -177,8 +177,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jTextField8 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -208,7 +206,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         tfContrasenia = new javax.swing.JPasswordField();
         tfNombre = new javax.swing.JTextField();
         tfNum_cedula = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -247,14 +244,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
-
-        titulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
-        titulo.setForeground(new java.awt.Color(238, 112, 82));
-        titulo.setText("REGISTRO DE EMPLEADO");
-        jPanel1.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
@@ -422,11 +411,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
 
-        jTextField7.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 170, 25));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
 
         pack();
@@ -501,7 +485,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrar1;
     private javax.swing.JComboBox<String> cbCargo;
     private javax.swing.JComboBox<String> cbId_sede;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -523,7 +506,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField tfCiudad;
     private javax.swing.JPasswordField tfContrasenia;
@@ -533,7 +515,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
     private javax.swing.JTextField tfNum_cedula;
     private javax.swing.JTextField tfTelefono;
     private javax.swing.JTextField tfUsuario;
-    private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
 }
