@@ -92,7 +92,7 @@ public class Factura extends javax.swing.JFrame implements Printable
         });
         jPanel3.add(tfUsuario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 170, 25));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSuperchico.png"))); // NOI18N
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 90));
 
         titulo1.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N

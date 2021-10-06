@@ -244,7 +244,7 @@ public class TelefonoGUI extends javax.swing.JFrame {
         });
         jPanel2.add(jlAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSuperchico.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
         btnModificar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N

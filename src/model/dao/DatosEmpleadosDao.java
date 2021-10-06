@@ -471,4 +471,240 @@ public class DatosEmpleadosDao {
         }
         return empleadoTelefono; 
     }
+    
+    
+    /**
+     * Enlista los atributos de la base de datos pero solo los necesarios para hacer la actualizacion de telefono de empleado
+     * @return ArrayList de tipo objeto DatosTelefono
+     */
+    public ArrayList<DatosEmpleados> datosModificacionDireccion(){
+        
+        ArrayList<DatosEmpleados> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT usuario, contrasenia, direccion"
+                + " FROM empleado"
+                    + " WHERE estado=true";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosEmpleados consulta = new DatosEmpleados();
+                consulta.setUsuario(resultado.getString(1));
+                consulta.setContrasenia(resultado.getString(2));
+                consulta.setDireccion(resultado.getString(3));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }
+        return respuesta;
+    }
+
+
+/**
+     * Actualiza la direccion del empleado en la base de datos
+     * @param direccionEmpleado de tipo DatosNombre
+     * @return DatosNombre objeto de este tipo
+     * @throws SQLException 
+     */
+    public DatosEmpleados actualizarDireccion(DatosEmpleados direccionEmpleado) throws SQLException{
+        DatosEmpleados empleadoDireccion = null;
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "UPDATE empleado SET direccion=? "
+                    + "WHERE usuario=? and contrasenia=?";
+            
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            
+            statement.setString(1, direccionEmpleado.getDireccionNuevo());
+            statement.setString(2, direccionEmpleado.getUsuario());
+            statement.setString(3, direccionEmpleado.getContrasenia());
+ 
+            statement.executeUpdate();
+
+            //Cerrar interacciones con BD            
+            statement.close();
+
+            //Si el proceso fue exitoso cambiar el estado
+            empleadoDireccion = direccionEmpleado;
+
+        }catch(SQLException e){
+            System.err.println("Error actualizando nombre empleado! "+e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+        return empleadoDireccion; 
+    }
+    
+    
+     /**
+     * Enlista los atributos de la base de datos pero solo los necesarios para hacer la actualizacion de telefono de empleado
+     * @return ArrayList de tipo objeto DatosTelefono
+     */
+    public ArrayList<DatosEmpleados> datosModificacionCargo(){
+        
+        ArrayList<DatosEmpleados> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT usuario, contrasenia, cargo"
+                + " FROM empleado"
+                    + " WHERE estado=true";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosEmpleados consulta = new DatosEmpleados();
+                consulta.setUsuario(resultado.getString(1));
+                consulta.setContrasenia(resultado.getString(2));
+                consulta.setCargo(resultado.getString(3));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }
+        return respuesta;
+    }
+
+
+/**
+     * Actualiza la direccion del empleado en la base de datos
+     * @param direccionEmpleado de tipo DatosNombre
+     * @return DatosNombre objeto de este tipo
+     * @throws SQLException 
+     */
+    public DatosEmpleados actualizarCargo(DatosEmpleados cargoEmpleado) throws SQLException{
+        DatosEmpleados empleadoCargo = null;
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "UPDATE empleado SET cargo=? "
+                    + "WHERE usuario=? and contrasenia=?";
+            
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            
+            statement.setString(1, cargoEmpleado.getCargoNuevo());
+            statement.setString(2, cargoEmpleado.getUsuario());
+            statement.setString(3, cargoEmpleado.getContrasenia());
+ 
+            statement.executeUpdate();
+
+            //Cerrar interacciones con BD            
+            statement.close();
+
+            //Si el proceso fue exitoso cambiar el estado
+            empleadoCargo = cargoEmpleado;
+
+        }catch(SQLException e){
+            System.err.println("Error actualizando nombre empleado! "+e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+        return empleadoCargo; 
+    }
+    
+    /**
+     * Enlista los atributos de la base de datos pero solo los necesarios para hacer la actualizacion de telefono de empleado
+     * @return ArrayList de tipo objeto DatosTelefono
+     */
+    public ArrayList<DatosEmpleados> datosModificacionSede(){
+        
+        ArrayList<DatosEmpleados> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT usuario, contrasenia, sede"
+                + " FROM empleado"
+                    + " WHERE estado=true";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosEmpleados consulta = new DatosEmpleados();
+                consulta.setUsuario(resultado.getString(1));
+                consulta.setContrasenia(resultado.getString(2));
+                consulta.setId_sede(resultado.getString(3));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }
+        return respuesta;
+    }
+
+
+/**
+     * Actualiza la direccion del empleado en la base de datos
+     * @param direccionEmpleado de tipo DatosNombre
+     * @return DatosNombre objeto de este tipo
+     * @throws SQLException 
+     */
+    public DatosEmpleados actualizarSede(DatosEmpleados sedeEmpleado) throws SQLException{
+        DatosEmpleados empleadoSede = null;
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "UPDATE empleado SET id_sede=? "
+                    + "WHERE usuario=? and contrasenia=?";
+            
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            
+            statement.setString(1, sedeEmpleado.getId_sedeNuevo());
+            statement.setString(2, sedeEmpleado.getUsuario());
+            statement.setString(3, sedeEmpleado.getContrasenia());
+ 
+            statement.executeUpdate();
+
+            //Cerrar interacciones con BD            
+            statement.close();
+
+            //Si el proceso fue exitoso cambiar el estado
+            empleadoSede = sedeEmpleado;
+
+        }catch(SQLException e){
+            System.err.println("Error actualizando nombre empleado! "+e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+        return empleadoSede; 
+    }
 }
