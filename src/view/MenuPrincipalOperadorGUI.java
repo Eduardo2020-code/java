@@ -160,6 +160,10 @@ public class MenuPrincipalOperadorGUI extends javax.swing.JFrame {
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
+        Reportes reportes = new Reportes();
+        this.setVisible(false);
+        reportes.setVisible(true);
+     
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
