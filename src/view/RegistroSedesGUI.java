@@ -103,7 +103,7 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {
-            registros[i][0] = consulta.get(i).getId_sede();
+            registros[i][0] = String.valueOf(consulta.get(i).getId_sede());
             registros[i][1] = consulta.get(i).getDireccion_sede();
             registros[i][2] = consulta.get(i).getBarrio_sede();
             registros[i][3] = consulta.get(i).getCiudad_sede();

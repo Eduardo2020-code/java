@@ -13,14 +13,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.dao.DatosEmpleadosDao;
 import model.dao.DatosSedesDao;
 import model.vo.DatosEmpleados;
 import model.vo.DatosSedes;
 import util.JDBCUtilities;
-import view.ModificacionEmpleadosGUI;
 import view.RegistroEmpleadosGUI;
-import view.modifyempleado.ContraseniaGUI;
 
 /**
  *
