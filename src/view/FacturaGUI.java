@@ -11,12 +11,12 @@ import javax.swing.table.DefaultTableModel;
 import model.dao.DatosPaquetesDao;
 import model.vo.DatosPaquetes;
 
-public class Factura extends javax.swing.JFrame implements Printable
+public class FacturaGUI extends javax.swing.JFrame implements Printable
 {
     //Atributos
     DefaultTableModel tPaquetes = new DefaultTableModel();
    
-    public Factura() {
+    public FacturaGUI() {
         initComponents();
         mostrarPaquetes();
         tfPagoNeto.setEditable(false);
@@ -268,21 +268,22 @@ public class Factura extends javax.swing.JFrame implements Printable
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Factura().setVisible(true);
+                new FacturaGUI().setVisible(true);
             }
         });
     }

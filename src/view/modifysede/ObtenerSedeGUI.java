@@ -111,8 +111,12 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
+<<<<<<< HEAD
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+=======
+        btnRegistrar1 = new javax.swing.JButton();
+>>>>>>> 62f92f19652a1700e47f54f14bd0894f65c4435c
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,7 +137,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableSedes);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 470, 100));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 470, 100));
 
         jPanel2.setLayout(null);
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 470, -1));
@@ -147,6 +151,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         titulo1.setToolTipText("");
         jPanel3.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 350, -1));
 
+<<<<<<< HEAD
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -160,6 +165,18 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(238, 112, 82));
         jLabel3.setText("Atrás");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(551, 60, 50, -1));
+=======
+        btnRegistrar1.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnRegistrar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        btnRegistrar1.setText("Modificar Sede");
+        btnRegistrar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRegistrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnRegistrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 190, 40));
+>>>>>>> 62f92f19652a1700e47f54f14bd0894f65c4435c
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,6 +192,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
             MenuPrincipalGUI menu = new MenuPrincipalGUI();
@@ -185,6 +203,13 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jLabel2MouseClicked
+=======
+    private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
+       SedeGUI a = new SedeGUI();
+        a.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegistrar1ActionPerformed
+>>>>>>> 62f92f19652a1700e47f54f14bd0894f65c4435c
 
     /**
      * @param args the command line arguments
@@ -280,6 +305,7 @@ public class ObtenerSedeGUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegistrar1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
