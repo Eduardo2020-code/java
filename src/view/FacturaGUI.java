@@ -247,7 +247,7 @@ public class FacturaGUI extends javax.swing.JFrame implements Printable
             MenuPrincipalGUI menu = new MenuPrincipalGUI();
             menu.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
 

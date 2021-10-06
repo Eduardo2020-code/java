@@ -14,7 +14,7 @@ import model.dao.DatosEnviosDao;
 import model.dao.DatosPaquetesDao;
 import model.vo.DatosEnvios;
 import model.vo.DatosPaquetes;
-import view.Factura;
+import view.FacturaGUI;
 import view.ModificacionEmpleadosGUI;
 /**
  *
@@ -324,7 +324,7 @@ public final class EfectivoGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
-        Factura factura = new Factura();
+        FacturaGUI factura = new FacturaGUI();
         this.setVisible(false);
         factura.setVisible(true);
     }//GEN-LAST:event_btnPagoActionPerformed
