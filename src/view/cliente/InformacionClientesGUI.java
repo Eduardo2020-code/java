@@ -255,6 +255,7 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
         try {
             validarCliente();
+            btnContinuar.setEnabled(true);
         } catch (SQLException ex) {
             Logger.getLogger(InformacionClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
