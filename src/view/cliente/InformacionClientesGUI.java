@@ -60,9 +60,6 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Ya se encuentra registrado, puede continuar");
                 btnContinuar.setEnabled(true);
                 
-                this.setVisible(false);
-                InformacionClientesGUI consulta = new InformacionClientesGUI();
-                consulta.setVisible(true);
                 
             }else{
                 JOptionPane.showMessageDialog(null, "Aún no se encuentra registrado");
@@ -255,7 +252,6 @@ public class InformacionClientesGUI extends javax.swing.JFrame {
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
         try {
             validarCliente();
-            btnContinuar.setEnabled(true);
         } catch (SQLException ex) {
             Logger.getLogger(InformacionClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
