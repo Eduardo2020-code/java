@@ -175,7 +175,6 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
         tfNombre = new javax.swing.JTextField();
         tfNum_cedula = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -322,14 +321,7 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
         });
         jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 200, 50));
 
-<<<<<<< HEAD
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSuperchico.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 90, 100));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
-=======
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
->>>>>>> 169135b4c562cc27eae4292dbb03408228fdaa1d
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
@@ -402,7 +394,6 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbId_sede;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;

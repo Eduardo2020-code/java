@@ -18,6 +18,7 @@ import model.vo.DatosCreditos;
 import model.vo.DatosEnvios;
 import model.vo.DatosTarjetas;
 import model.vo.DatosTarjetasDebito;
+import view.FacturaGUI;
 import view.ModificacionEmpleadosGUI;
 /**
  *
@@ -81,11 +82,7 @@ public final class TarjetaGUI extends javax.swing.JFrame {
     
     public void validarTarjetaDebito() throws SQLException{
 
-        int mes=jcMes.getMonth()+1;
-        int anio=jcAnio.getYear();
         
-        //Se concatena para que quede en un unico string la fecha de vencimiento
-        String fechaVencimiento=String.valueOf(mes)+"/"+String.valueOf(anio);
         
         DatosTarjetasDao c = new DatosTarjetasDao();
         
@@ -115,7 +112,7 @@ public final class TarjetaGUI extends javax.swing.JFrame {
                 && tfNombre.getText().length()!=0
                 && tfCedula.getText().length()!=0){
             if(numero_tarjeta==Integer.parseInt(tfNumero.getText())){
-                if(fecha_vencimiento.equals(fechaVencimiento)){
+                if(fecha_vencimiento.equals(tfFecha.getText())){
                     if(codigo_seguridad==Integer.parseInt(tfCodigoSeg.getText())){
                         if(nombre_titular.equals(tfNombre.getText())){
                             if(cedula_titular.equals(tfCedula.getText())){
@@ -165,11 +162,6 @@ public final class TarjetaGUI extends javax.swing.JFrame {
     
     public void validarTarjetaCredito() throws SQLException{
 
-        int mes=jcMes.getMonth()+1;
-        int anio=jcAnio.getYear();
-        
-        //Se concatena para que quede en un unico string la fecha de vencimiento
-        String fechaVencimiento=String.valueOf(mes)+"/"+String.valueOf(anio);
         
         DatosTarjetasDao c = new DatosTarjetasDao();
         
@@ -200,7 +192,7 @@ public final class TarjetaGUI extends javax.swing.JFrame {
                 && tfNombre.getText().length()!=0
                 && tfCedula.getText().length()!=0){
             if(numero_tarjeta==Integer.parseInt(tfNumero.getText())){
-                if(fecha_vencimiento.equals(fechaVencimiento)){
+                if(fecha_vencimiento.equals(tfFecha.getText())){
                     if(codigo_seguridad==Integer.parseInt(tfCodigoSeg.getText())){
                         if(nombre_titular.equals(tfNombre.getText())){
                             if(cedula_titular.equals(tfCedula.getText())){
@@ -220,7 +212,7 @@ public final class TarjetaGUI extends javax.swing.JFrame {
                                 if(creditoCreado != null){
                                     JOptionPane.showMessageDialog(null, "Se generó el crédito correctamente");
                                     this.setVisible(false);
-                                    ModificacionEmpleadosGUI modificacion = new ModificacionEmpleadosGUI();
+                                    FacturaGUI modificacion = new FacturaGUI();
                                     modificacion.setVisible(true);
 
                                 }else{
@@ -309,7 +301,6 @@ public final class TarjetaGUI extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         btnPago = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -325,8 +316,7 @@ public final class TarjetaGUI extends javax.swing.JFrame {
         cbCuotas = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
         tfTotalPago = new javax.swing.JTextField();
-        jcMes = new com.toedter.calendar.JMonthChooser();
-        jcAnio = new com.toedter.calendar.JYearChooser();
+        tfFecha = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -403,9 +393,6 @@ public final class TarjetaGUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         btnPago.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
@@ -494,8 +481,11 @@ public final class TarjetaGUI extends javax.swing.JFrame {
         tfTotalPago.setForeground(new java.awt.Color(153, 153, 153));
         tfTotalPago.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(tfTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 170, 25));
-        jPanel2.add(jcMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, -1, -1));
-        jPanel2.add(jcAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 320, -1, -1));
+
+        tfFecha.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfFecha.setForeground(new java.awt.Color(153, 153, 153));
+        tfFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 170, 25));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 800, 590));
 
@@ -663,7 +653,6 @@ public final class TarjetaGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnPago;
     private javax.swing.JComboBox<String> cbCuotas;
     private javax.swing.JComboBox<String> cbTipo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -683,10 +672,9 @@ public final class TarjetaGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
-    private com.toedter.calendar.JYearChooser jcAnio;
-    private com.toedter.calendar.JMonthChooser jcMes;
     private javax.swing.JTextField tfCedula;
     private javax.swing.JTextField tfCodigoSeg;
+    private javax.swing.JTextField tfFecha;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfNumero;
     private javax.swing.JTextField tfTotalPago;
