@@ -36,7 +36,7 @@ public class DatosSedesDao {
             
             while(resultado.next()){
                 DatosSedes consulta = new DatosSedes();
-                consulta.setId_sede(resultado.getString(1));
+                consulta.setId_sede(resultado.getInt(1));
                 consulta.setDireccion_sede(resultado.getString(2));
                 consulta.setBarrio_sede(resultado.getString(3));
                 consulta.setCiudad_sede(resultado.getString(4));
@@ -108,7 +108,7 @@ public class DatosSedesDao {
             statement.setString(2, modificarSede.getBarrio_sede());
             statement.setString(3, modificarSede.getCiudad_sede());
             statement.setString(4, modificarSede.getTelefono_sede());
-            statement.setInt(5, (int) Integer.parseInt(modificarSede.getId_sede()));
+            statement.setInt(5, modificarSede.getId_sede());
             
          
 
@@ -140,7 +140,7 @@ public class DatosSedesDao {
         try{
             conexion= conex.getConnection();
 
-            String consulta = "UPDATE sede SET, barrio_Sede=?, where idSede=? ";
+            String consulta = "UPDATE sede SET barrio_Sede=?, where idSede=? ";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
@@ -148,7 +148,7 @@ public class DatosSedesDao {
             statement.setString(1, modificarBarrioSede.getBarrio_sede());
            
            
-            statement.setInt(2, (int) Integer.parseInt((String) modificarBarrioSede.getId_sede()));
+            //statement.setInt(2, (int) Integer.parseInt((String) modificarBarrioSede.getId_sede()));
             
 
             //Realizar la actualización: Crear material
@@ -173,7 +173,7 @@ public class DatosSedesDao {
         return barrioActualizar;
     }
    
-   public DatosSedes modificarCuidadSede(DatosSedes modificarCuidadSede ) throws SQLException{
+   public DatosSedes modificarCiudadSede(DatosSedes modificarCiudadSede ) throws SQLException{
         DatosSedes cuidadActualizar = null;
         Connection conexion = null;
         JDBCUtilities conex = new JDBCUtilities();
@@ -181,14 +181,16 @@ public class DatosSedesDao {
         try{
             conexion= conex.getConnection();
 
-            String consulta = "UPDATE sede SET cuidad_Sede=? where idSede=? ";
+            String consulta = "UPDATE sede SET ciudad_sede=?, dir_sede=?, barrio_sede=? WHERE id_sede=? ";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
            
-            statement.setString(1, modificarCuidadSede.getCiudad_sede());
+            statement.setString(1, modificarCiudadSede.getCiudad_sede());
+            statement.setString(2, modificarCiudadSede.getDireccion_sede());
+            statement.setString(3, modificarCiudadSede.getBarrio_sede());
+            statement.setInt(4, modificarCiudadSede.getId_sede());
             
-            statement.setInt(2, (int) Integer.parseInt((String) modificarCuidadSede.getId_sede()));
             
 
             //Realizar la actualización: Crear material
@@ -198,7 +200,7 @@ public class DatosSedesDao {
             statement.close();
 
             //Si el proceso fue exitoso cambiar el estado
-            cuidadActualizar = modificarCuidadSede;
+            cuidadActualizar = modificarCiudadSede;
 
         }catch(SQLException e){
             System.err.println("Error actualizando sede! "+e);
@@ -211,7 +213,9 @@ public class DatosSedesDao {
 
         //Retornar la instancia del material o el nulo para validaciones posteriores
         return cuidadActualizar; 
-}
+    }
+   
+   
  public DatosSedes modificarTelefonoSede(DatosSedes modificarTelefonoSede ) throws SQLException{
         DatosSedes telefonoActualizar = null;
         Connection conexion = null;
@@ -228,7 +232,7 @@ public class DatosSedesDao {
             statement.setString(1, modificarTelefonoSede.getTelefono_sede());
             
            
-            statement.setInt(2, (int) Integer.parseInt((String) modificarTelefonoSede.getId_sede()));
+            //statement.setInt(2, (int) Integer.parseInt((String) modificarTelefonoSede.getId_sede()));
             
 
             //Realizar la actualización: Crear material
@@ -269,7 +273,7 @@ public class DatosSedesDao {
             statement.setString(1, modificarDireccionSede.getDireccion_sede());
             
            
-            statement.setInt(2, (int) Integer.parseInt((String) modificarDireccionSede.getId_sede()));
+            //statement.setInt(2, (int) Integer.parseInt((String) modificarDireccionSede.getId_sede()));
             
 
             //Realizar la actualización: Crear material

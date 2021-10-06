@@ -5,7 +5,22 @@
  */
 package view.modifysede;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.dao.DatosEmpleadosDao;
+import model.dao.DatosSedesDao;
+import model.vo.DatosEmpleados;
+import model.vo.DatosSedes;
+import util.JDBCUtilities;
+import view.ModificacionEmpleadosGUI;
+import view.RegistroEmpleadosGUI;
+import view.modifyempleado.ContraseniaGUI;
 
 /**
  *
@@ -18,8 +33,77 @@ public class CuidadGUI extends javax.swing.JFrame {
      */
     public CuidadGUI() {
         initComponents();
+        obtenerSedes();
     }
 
+    public void actualizarCiudad() throws SQLException{
+        
+        if(tfCiudad.getText().length()!=0
+                && tfBarrio.getText().length()!=0
+                && tfDireccion.getText().length()!=0){
+            
+            DatosSedes ciudadActualizar = new DatosSedes();
+
+            ciudadActualizar.setCiudad_sede(tfCiudad.getText());
+            ciudadActualizar.setBarrio_sede(tfBarrio.getText());
+            ciudadActualizar.setDireccion_sede(tfDireccion.getText());
+            ciudadActualizar.setId_sede(Integer.parseInt(cbId_sede.getSelectedItem().toString()));
+
+            DatosSedes sedeActualizada =null;
+            DatosSedesDao d = new DatosSedesDao();
+
+            sedeActualizada = d.modificarCiudadSede(ciudadActualizar);
+
+            if(sedeActualizada != null){
+                JOptionPane.showMessageDialog(null, "La ciudad de la sede se actualizó correctamente");
+                this.setVisible(false);
+                SedeGUI modificacion = new SedeGUI();
+                modificacion.setVisible(true);
+
+            }else{
+                JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, " Los datos no pueden estar vacios");
+        }    
+    }
+    
+    
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
+        
+        //Declaración del contenedor de retorno
+        String[][] registros = new String[consulta.size()][2];        
+
+        //Desenvolver los objetos de la colección
+        for (int i = 0; i < consulta.size(); i++) {
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContrasenia();   
+        }
+
+        //Retornar registros en formato JTable
+        return registros;
+
+    }
+    
+    
+    private void obtenerSedes() { 
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        ArrayList<Integer> listaSedes = new ArrayList<>();
+        try {
+            conexion= conex.getConnection();
+            Statement leer = conexion.createStatement();
+            ResultSet resultado = leer.executeQuery("SELECT id_sede FROM sede");
+            while(resultado.next()){
+                listaSedes.add(resultado.getInt(1));
+            }
+            for(int i=0;i<listaSedes.size();i++){
+                cbId_sede.addItem(Integer.toString(listaSedes.get(i)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,13 +120,13 @@ public class CuidadGUI extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         titulo = new javax.swing.JLabel();
-        tfUsuario1 = new javax.swing.JTextField();
-        tfUsuario2 = new javax.swing.JTextField();
-        tfUsuario3 = new javax.swing.JTextField();
+        tfDireccion = new javax.swing.JTextField();
+        tfBarrio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        btnRegistrar1 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
-        tfUsuario4 = new javax.swing.JTextField();
+        tfCiudad = new javax.swing.JTextField();
+        cbId_sede = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,53 +138,43 @@ public class CuidadGUI extends javax.swing.JFrame {
 
         titulo1.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         titulo1.setForeground(new java.awt.Color(238, 112, 82));
-        titulo1.setText("MODIFICAR SEDE ");
+        titulo1.setText("MODIFICAR CIUDAD");
         jPanel2.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(238, 112, 82));
         jLabel16.setText("Barrio: ");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel17.setText("Observaciones:");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, -1, -1));
+        jLabel17.setText("Dirección:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel18.setText("sede:");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, 30));
+        jLabel18.setText("ID Sede:");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, -1, 30));
 
         titulo.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         titulo.setForeground(new java.awt.Color(153, 153, 153));
         titulo.setText("Llena los siguientes campos para modificar: ");
-        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, 30));
+        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, 30));
 
-        tfUsuario1.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario1.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 170, 25));
+        tfDireccion.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfDireccion.setForeground(new java.awt.Color(153, 153, 153));
+        tfDireccion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 170, 25));
 
-        tfUsuario2.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario2.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfUsuario2.addActionListener(new java.awt.event.ActionListener() {
+        tfBarrio.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfBarrio.setForeground(new java.awt.Color(153, 153, 153));
+        tfBarrio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfBarrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuario2ActionPerformed(evt);
+                tfBarrioActionPerformed(evt);
             }
         });
-        jPanel2.add(tfUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 170, 25));
-
-        tfUsuario3.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario3.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfUsuario3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuario3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(tfUsuario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 170, 25));
+        jPanel2.add(tfBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 170, 25));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow.png"))); // NOI18N
@@ -114,31 +188,40 @@ public class CuidadGUI extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
 
-        btnRegistrar1.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnRegistrar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        btnRegistrar1.setText("Modificar Sede");
-        btnRegistrar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRegistrar1.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        btnModificar.setText("Modificar Sede");
+        btnModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrar1ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnRegistrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 200, 50));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 200, 50));
 
         jLabel19.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(238, 112, 82));
         jLabel19.setText("Cuidad:");
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, 30));
 
-        tfUsuario4.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario4.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfUsuario4.addActionListener(new java.awt.event.ActionListener() {
+        tfCiudad.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfCiudad.setForeground(new java.awt.Color(153, 153, 153));
+        tfCiudad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfCiudad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuario4ActionPerformed(evt);
+                tfCiudadActionPerformed(evt);
             }
         });
-        jPanel2.add(tfUsuario4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 170, 25));
+        jPanel2.add(tfCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 170, 25));
+
+        cbId_sede.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        cbId_sede.setForeground(new java.awt.Color(153, 153, 153));
+        cbId_sede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbId_sedeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cbId_sede, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 170, 25));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,9 +239,9 @@ public class CuidadGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfUsuario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuario2ActionPerformed
+    private void tfBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBarrioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfUsuario2ActionPerformed
+    }//GEN-LAST:event_tfBarrioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         SedeGUI a = new SedeGUI();
@@ -166,18 +249,23 @@ public class CuidadGUI extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
          JOptionPane.showMessageDialog( this , "¿Esta seguro de hacer el cambio de sede?", "Modificar Sede" , JOptionPane.INFORMATION_MESSAGE);
+        try {
+            actualizarCiudad();
+        } catch (SQLException ex) {
+            Logger.getLogger(CuidadGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
          
-    }//GEN-LAST:event_btnRegistrar1ActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void tfUsuario4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuario4ActionPerformed
+    private void tfCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCiudadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfUsuario4ActionPerformed
+    }//GEN-LAST:event_tfCiudadActionPerformed
 
-    private void tfUsuario3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuario3ActionPerformed
+    private void cbId_sedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbId_sedeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfUsuario3ActionPerformed
+    }//GEN-LAST:event_cbId_sedeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,7 +303,8 @@ public class CuidadGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrar1;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> cbId_sede;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
@@ -223,10 +312,9 @@ public class CuidadGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tfUsuario1;
-    private javax.swing.JTextField tfUsuario2;
-    private javax.swing.JTextField tfUsuario3;
-    private javax.swing.JTextField tfUsuario4;
+    private javax.swing.JTextField tfBarrio;
+    private javax.swing.JTextField tfCiudad;
+    private javax.swing.JTextField tfDireccion;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
