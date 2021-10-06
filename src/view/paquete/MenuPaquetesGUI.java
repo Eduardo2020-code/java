@@ -4,13 +4,8 @@
  * and open the template in the editor.
  */
 package view.paquete;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.dao.DatosClientesDao;
 import model.dao.DatosPaquetesDao;
 import model.vo.DatosClientes;
 import model.vo.DatosPaquetes;

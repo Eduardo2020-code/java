@@ -117,7 +117,7 @@ public class DatosClientesDao {
             conexion= conex.getConnection();
 
             String consulta = "INSERT INTO cliente(cedula_cliente, nombre_cliente,"
-                    + "direccion_cliente, ciudad_cliente, telefono_cliente, id_sede , "
+                    + "direccion_cliente, ciudad_cliente, telefono_cliente, id_sede) "
                     + "VALUES(?,?,?,?,?,?)";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
