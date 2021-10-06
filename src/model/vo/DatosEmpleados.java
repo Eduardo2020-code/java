@@ -27,7 +27,9 @@ public class DatosEmpleados {
     private String contraseniaNueva;
     private String nombreNuevo;
     private String telefonoNuevo;
-
+    private String direccionNuevo;
+    private String cargoNuevo;
+    private String id_sedeNuevo;
     public DatosEmpleados(){
         
     }
@@ -170,10 +172,38 @@ public class DatosEmpleados {
     public void setTelefonoNuevo(String telefonoNuevo) {
         this.telefonoNuevo = telefonoNuevo;
     }
+    
+    public String getDireccionNuevo() {
+        return direccionNuevo;
+    }
 
+    public void setDireccionNuevo(String direccionNuevo) {
+        this.direccionNuevo = direccionNuevo;
+    }
+
+    public String getCargoNuevo() {
+        return cargoNuevo;
+    }
+
+    public void setCargoNuevo(String cargoNuevo) {
+        this.cargoNuevo = cargoNuevo;
+    }
+
+    public String getId_sedeNuevo() {
+        return id_sedeNuevo;
+    }
+
+    public void setId_sedeNuevo(String id_sedeNuevo) {
+        this.id_sedeNuevo = id_sedeNuevo;
+    }
+    
+    
+   
     
     
     
     
     
 }
+
+    

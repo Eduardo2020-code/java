@@ -7,7 +7,10 @@ package view;
 
 import java.util.ArrayList;
 import model.vo.DatosEmpleados;
+import view.modifyempleado.CargoGUI1;
+import view.modifyempleado.SedeGUI11;
 import view.modifyempleado.UsuarioGUI;
+import view.modifysede.DireccionGUI;
 
 /**
  *
@@ -117,7 +120,7 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSuperchico.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         titulo.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
@@ -235,6 +238,9 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
 
     private void rbtnId_sedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnId_sedeActionPerformed
         // TODO add your handling code here:
+        SedeGUI11 usuario = new SedeGUI11();
+        usuario.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_rbtnId_sedeActionPerformed
 
     private void rbtnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnUsuarioActionPerformed
@@ -255,10 +261,16 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
 
     private void rbtnDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnDireccionActionPerformed
         // TODO add your handling code here:
+        DireccionGUI usuario = new DireccionGUI();
+        usuario.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_rbtnDireccionActionPerformed
 
     private void rbtnCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCargoActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
+        CargoGUI1 usuario = new CargoGUI1();
+        usuario.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_rbtnCargoActionPerformed
 
     private void rbtnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnUsuarioMouseClicked

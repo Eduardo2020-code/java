@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="envioR" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2104590-6843-49eb-9bd1-8345ca58bf11">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="first"/>
+	<queryString language="SQL">
+		<![CDATA[select * from envio]]>
+	</queryString>
+	<field name="id_envio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_envio"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_envio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="envio"/>
+	</field>
+	<field name="valor_envio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="valor_envio"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_envio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="envio"/>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="7c74f1ce-c10f-4dc4-ad57-e855c835fecb"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="5005272a-ae4b-4e44-bba3-959aa99403e3"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reporte Envio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="320" y="43" width="255" height="20" forecolor="#FFFFFF" uuid="17c36e14-032d-48a0-bf9f-a7f62fb45bb5"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Valores del envio en la empresa]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="93244f71-965d-4c9e-bcca-f009f6e596c0"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5559faad-b2a9-4fae-be5d-589757b8f7d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9080022-428c-40a9-935c-e23d9ec83e39"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="277" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6cee3fca-4032-4e91-92da-74ca35cef0b9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3289eac-a273-4c3c-849c-74214003add8"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="88f45f2b-a8cb-47b3-8bd1-c97baac85bbc"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="277" height="20" uuid="321fbe49-11e8-4a6c-86db-41b0217f55d0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9080022-428c-40a9-935c-e23d9ec83e39"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_envio}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="277" y="0" width="277" height="20" uuid="779b8ce9-ca63-4895-a8c2-3ef581675c15">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3289eac-a273-4c3c-849c-74214003add8"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_envio}.intValue()+ ".00$"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="f6d761d0-9f11-4f50-85d7-2fd2bd88d068"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="3e343ab5-5b86-46d1-ad73-7ee1cbd3fa32"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="d90d6a72-1e4a-47d6-bf53-d3c4547101fb"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
