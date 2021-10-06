@@ -5,31 +5,41 @@
  */
 package view.envio;
 
-import view.modifyempleado.*;
-import view.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import model.dao.DatosEmpleadosDao;
-import model.vo.DatosEmpleados;
+import model.dao.DatosEnviosDao;
+import model.dao.DatosPaquetesDao;
+import model.vo.DatosEnvios;
+import model.vo.DatosPaquetes;
 import view.ModificacionEmpleadosGUI;
 /**
  *
  * @author usuario
  */
-public class EfectivoGUI extends javax.swing.JFrame {
+public final class EfectivoGUI extends javax.swing.JFrame {
 
     //Atributos
-    
+    int suma_valor_paq=0;
+    int suma_valor_imp=0;
+    int suma_valor_seguro=0;
+    int suma_total=0;
     /**
      * Creates new form ConsultaEmpleadosGUI
+     * @throws java.sql.SQLException
      */
-    public EfectivoGUI(){
+    public EfectivoGUI() throws SQLException{
         initComponents();
+        btnPago.setEnabled(false);
+        tfNeto.setEditable(false);
+        tfImpuesto.setEditable(false);
+        tfPagoTotal.setEditable(false);
+        tfCambio.setEditable(false);
+        tfSeguro.setEditable(false);
+        obtenerDatosEnvio();
+        obtenerDatosPaquetes();
         
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
@@ -39,78 +49,82 @@ public class EfectivoGUI extends javax.swing.JFrame {
         
     }  
     
-    public void actualizarContrasenia() throws SQLException{
-        //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
-        DatosEmpleadosDao c = new DatosEmpleadosDao();
-        
-        //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
-        ArrayList<DatosEmpleados> lista = c.datosModificacionContrasenia();
-        
-        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
-        String[][] lista2 = formatoRegistros(lista);
-        
-        String usuario="";
-        String contraAnt="";
-        
-        for(int i = 0; i<lista.size(); i++){
-            if(lista2[i][0].equals(tfUsuario.getText())){
-                usuario=lista2[i][0];
-                contraAnt=lista2[i][1];
-            }
-        }
-            
-        if(usuario.equals(tfUsuario.getText())){
-            if(contraAnt.equals(tfContraseniaAnt.getText())){
-                if(!tfContraseniaAnt.getText().equals(tfContraseniaNueva.getText())){
-                    if(tfContraseniaNueva.getText().equals(tfContraseniaNueva2.getText())){
-                        try {
-                            DatosEmpleados contraseniaActualizar = new DatosEmpleados();
-
-                            contraseniaActualizar.setContraseniaNueva(tfContraseniaNueva.getText());
-                            contraseniaActualizar.setUsuario(tfUsuario.getText());
-                            contraseniaActualizar.setContrasenia(tfContraseniaAnt.getText());
-
-                            DatosEmpleados contraseniaActualizado =null;
-                            DatosEmpleadosDao d = new DatosEmpleadosDao();
-
-                            contraseniaActualizado = d.actualizarContrasenia(contraseniaActualizar);
-
-                            if(contraseniaActualizado != null){
-                                JOptionPane.showMessageDialog(null, "La contraseña del empleado se actualizó correctamente");
-                                this.setVisible(false);
-                                ModificacionEmpleadosGUI modificacion = new ModificacionEmpleadosGUI();
-                                modificacion.setVisible(true);
-                                
-                            }else{
-                                JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
-                            }
-                        }catch (SQLException ex) {
-                            Logger.getLogger(EfectivoGUI.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Las contraseñas nuevas no son iguales");
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "La nueva contraseña no puede ser igual a la anterior");
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Contraseña antererior no valida");
-            }
+    public void validacionMonto(){
+        int sumaCambio=0;
+        if(Integer.parseInt(tfMonto.getText())>=suma_total){
+            sumaCambio=Integer.parseInt(tfMonto.getText())-suma_total;
+            tfCambio.setText(String.valueOf(sumaCambio));
+            btnPago.setEnabled(true);
         }else{
-            JOptionPane.showMessageDialog(null, "Verifique el nombre de usuario");
+            JOptionPane.showMessageDialog(null, "El monto no puede ser menor al valor a pagar");
         }
     }
     
+    public void obtenerDatosEnvio() throws SQLException{
+        //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
+        DatosEnviosDao c = new DatosEnviosDao();
+        
+        //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
+        ArrayList<DatosEnvios> lista = c.consultaEnvio();
+        
+        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
+        int [] lista2 = formatoRegistrosEnvios(lista);
+        
+        suma_total=lista2[1];
+        
+        tfPagoTotal.setText(String.valueOf(lista2[1]));
+    }
     
-    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta){
+    public void obtenerDatosPaquetes(){
+        //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
+        DatosPaquetesDao c = new DatosPaquetesDao();
+        
+        //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
+        ArrayList<DatosPaquetes> lista = c.datosEfectivo();
+        
+        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
+        int[][] lista2 = formatoRegistrosPaquetes(lista);
+        
+        
+        for(int i=0;i<lista.size();i++){
+            suma_valor_paq+=lista2[i][1];
+            suma_valor_imp+=lista2[i][2];
+            suma_valor_seguro+=lista2[i][3];
+            
+        }
+        
+        tfNeto.setText(String.valueOf(suma_valor_paq));
+        tfImpuesto.setText(String.valueOf(suma_valor_imp));
+        tfSeguro.setText(String.valueOf(suma_valor_seguro));
+    }
+    
+    
+    public int[] formatoRegistrosEnvios(ArrayList<DatosEnvios> consulta){
         
         //Declaración del contenedor de retorno
-        String[][] registros = new String[consulta.size()][2];        
+        int[] registros = new int[2];        
 
         //Desenvolver los objetos de la colección
-        for (int i = 0; i < consulta.size(); i++) {
-            registros[i][0] = consulta.get(i).getUsuario();
-            registros[i][1] = consulta.get(i).getContrasenia();   
+            registros[0] = consulta.get(0).getId_envio();
+            registros[1] = consulta.get(0).getValor_envio();   
+
+        //Retornar registros en formato JTable
+        return registros;
+
+    }
+    
+    public int[][] formatoRegistrosPaquetes(ArrayList<DatosPaquetes> consulta){
+        
+        //Declaración del contenedor de retorno
+        int[][] registros = new int[consulta.size()][4];        
+        
+
+        //Desenvolver los objetos de la colección
+        for (int i = 0; i < consulta.size(); i++) {            
+            registros[i][0] = consulta.get(i).getNum_paq();
+            registros[i][1] = consulta.get(i).getValor_paq();
+            registros[i][2] = consulta.get(i).getValor_imp();
+            registros[i][3] = consulta.get(i).getValor_seguro();
         }
 
         //Retornar registros en formato JTable
@@ -137,19 +151,22 @@ public class EfectivoGUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        tfUsuario = new javax.swing.JTextField();
+        tfMonto = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        tfContraseniaNueva2 = new javax.swing.JPasswordField();
         titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnPago = new javax.swing.JButton();
-        tfContraseniaNueva = new javax.swing.JPasswordField();
-        tfContraseniaAnt = new javax.swing.JPasswordField();
         jLabel18 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel19 = new javax.swing.JLabel();
-        tfContraseniaNueva3 = new javax.swing.JPasswordField();
+        tfNeto = new javax.swing.JTextField();
+        tfPagoTotal = new javax.swing.JTextField();
+        tfImpuesto = new javax.swing.JTextField();
+        tfCambio = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
+        tfSeguro = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -200,31 +217,22 @@ public class EfectivoGUI extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(238, 112, 82));
         jLabel16.setText("Monto en efectivo:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(238, 112, 82));
         jLabel17.setText("Pago Total:");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, -1, -1));
 
-        tfUsuario.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(tfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 170, 25));
+        tfMonto.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfMonto.setForeground(new java.awt.Color(153, 153, 153));
+        tfMonto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 170, 25));
 
         jLabel21.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(238, 112, 82));
         jLabel21.setText("Pago neto:");
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
-
-        tfContraseniaNueva2.setForeground(new java.awt.Color(153, 153, 153));
-        tfContraseniaNueva2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfContraseniaNueva2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfContraseniaNueva2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(tfContraseniaNueva2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         titulo.setForeground(new java.awt.Color(238, 112, 82));
@@ -253,60 +261,69 @@ public class EfectivoGUI extends javax.swing.JFrame {
                 btnPagoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 200, 50));
-
-        tfContraseniaNueva.setForeground(new java.awt.Color(153, 153, 153));
-        tfContraseniaNueva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfContraseniaNueva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfContraseniaNuevaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(tfContraseniaNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 170, 25));
-
-        tfContraseniaAnt.setForeground(new java.awt.Color(153, 153, 153));
-        tfContraseniaAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfContraseniaAnt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfContraseniaAntActionPerformed(evt);
-            }
-        });
-        jPanel2.add(tfContraseniaAnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 170, 25));
+        jPanel2.add(btnPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, 200, 50));
 
         jLabel18.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel18.setText("IVA (19%):");
+        jLabel18.setText("Impuesto:");
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, -1, -1));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 580, 20));
 
         jLabel19.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(238, 112, 82));
         jLabel19.setText("Cambio:");
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, -1));
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, -1, -1));
 
-        tfContraseniaNueva3.setForeground(new java.awt.Color(153, 153, 153));
-        tfContraseniaNueva3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfContraseniaNueva3.addActionListener(new java.awt.event.ActionListener() {
+        tfNeto.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfNeto.setForeground(new java.awt.Color(153, 153, 153));
+        tfNeto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfNeto, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 170, 25));
+
+        tfPagoTotal.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfPagoTotal.setForeground(new java.awt.Color(153, 153, 153));
+        tfPagoTotal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfPagoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 170, 25));
+
+        tfImpuesto.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfImpuesto.setForeground(new java.awt.Color(153, 153, 153));
+        tfImpuesto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 170, 25));
+
+        tfCambio.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfCambio.setForeground(new java.awt.Color(153, 153, 153));
+        tfCambio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 170, 25));
+
+        btnAceptar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfContraseniaNueva3ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
-        jPanel2.add(tfContraseniaNueva3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 170, 25));
+        jPanel2.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 200, 50));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        tfSeguro.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfSeguro.setForeground(new java.awt.Color(153, 153, 153));
+        tfSeguro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfSeguro, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 170, 25));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        jLabel20.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel20.setText("Seguro:");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 800, 590));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 800, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
-        try {
-            // TODO add your handling code here:
-            actualizarContrasenia();
-        } catch (SQLException ex) {
-            Logger.getLogger(EfectivoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_btnPagoActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
@@ -316,21 +333,10 @@ public class EfectivoGUI extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void tfContraseniaNueva2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaNueva2ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfContraseniaNueva2ActionPerformed
-
-    private void tfContraseniaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaNuevaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfContraseniaNuevaActionPerformed
-
-    private void tfContraseniaAntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaAntActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfContraseniaAntActionPerformed
-
-    private void tfContraseniaNueva3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaNueva3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfContraseniaNueva3ActionPerformed
+        validacionMonto();
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -395,12 +401,17 @@ public class EfectivoGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EfectivoGUI().setVisible(true);
+                try {
+                    new EfectivoGUI().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EfectivoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
@@ -409,6 +420,7 @@ public class EfectivoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -418,11 +430,12 @@ public class EfectivoGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JPasswordField tfContraseniaAnt;
-    private javax.swing.JPasswordField tfContraseniaNueva;
-    private javax.swing.JPasswordField tfContraseniaNueva2;
-    private javax.swing.JPasswordField tfContraseniaNueva3;
-    private javax.swing.JTextField tfUsuario;
+    private javax.swing.JTextField tfCambio;
+    private javax.swing.JTextField tfImpuesto;
+    private javax.swing.JTextField tfMonto;
+    private javax.swing.JTextField tfNeto;
+    private javax.swing.JTextField tfPagoTotal;
+    private javax.swing.JTextField tfSeguro;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

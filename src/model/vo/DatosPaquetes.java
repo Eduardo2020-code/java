@@ -11,6 +11,7 @@ package model.vo;
  */
 public class DatosPaquetes {
     
+    public int num_paq;
     public int id_envio;
     public String tamanio_paq;
     public double peso_paq;
@@ -21,7 +22,8 @@ public class DatosPaquetes {
     public int id_cliente;
     public int id_dest;
 
-    public DatosPaquetes(int id_envio, String tamanio_paq, double peso_paq, String tipo_paq, int valor_paq, int valor_imp, int valor_seguro, int id_cliente, int id_dest) {
+    public DatosPaquetes(int num_paq, int id_envio, String tamanio_paq, double peso_paq, String tipo_paq, int valor_paq, int valor_imp, int valor_seguro, int id_cliente, int id_dest) {
+        this.num_paq=num_paq;
         this.id_envio = id_envio;
         this.tamanio_paq = tamanio_paq;
         this.peso_paq = peso_paq;
@@ -44,6 +46,16 @@ public class DatosPaquetes {
 
     public DatosPaquetes() {
     }
+
+    public int getNum_paq() {
+        return num_paq;
+    }
+
+    public void setNum_paq(int num_paq) {
+        this.num_paq = num_paq;
+    }
+    
+    
 
     public int getId_envio() {
         return id_envio;

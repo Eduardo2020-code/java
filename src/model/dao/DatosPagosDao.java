@@ -11,29 +11,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import model.vo.DatosEmpleados;
 import model.vo.DatosEnvios;
+import model.vo.DatosPagos;
 import util.JDBCUtilities;
 
 /**
  *
  * @author usuario
  */
-public class DatosEnviosDao {
+public class DatosPagosDao {
     
-    public DatosEnvios registrarEnvio(DatosEnvios nuevoEnvio) throws SQLException{
-        DatosEnvios envioRegistrado = null;
+    public DatosPagos registrarPago(DatosPagos nuevoPago) throws SQLException{
+        DatosPagos pagoRegistrado = null;
         Connection conexion = null;
         JDBCUtilities conex = new JDBCUtilities();
         
         try{
             conexion= conex.getConnection();
 
-            String consulta = "INSERT INTO envio(valor_envio) VALUES(?)";
+            String consulta = "INSERT INTO pago(id_envio, medio_pago) VALUES(?,?)";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
-            statement.setInt(1, nuevoEnvio.getValor_envio());
+            statement.setInt(1, nuevoPago.getId_envio());
+            statement.setString(2, nuevoPago.getMedio_pago());
 
             //Realizar la actualización: Crear material
             statement.executeUpdate();
@@ -42,7 +43,7 @@ public class DatosEnviosDao {
             statement.close();
 
             //Si el proceso fue exitoso cambiar el estado
-            envioRegistrado = nuevoEnvio;
+            pagoRegistrado = nuevoPago;
 
         }catch(SQLException e){
             System.err.println("Error registrando empleado! "+e);
@@ -54,7 +55,7 @@ public class DatosEnviosDao {
         }
 
         //Retornar la instancia del material o el nulo para validaciones posteriores
-        return envioRegistrado; 
+        return pagoRegistrado; 
     }
     
     public ArrayList<DatosEnvios> consultaEnvio() throws SQLException{
@@ -110,39 +111,6 @@ public class DatosEnviosDao {
             while(resultado.next()){
                 DatosEnvios consulta = new DatosEnvios();
                 consulta.setValor_envio(resultado.getInt(1));
-                
-                respuesta.add(consulta);
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
-        }finally{
-            //Cierre del controlador
-            if(conexion != null){
-                conexion.close();
-            }
-        }
-        return respuesta;
-    }
-    
-    public ArrayList<DatosEnvios> consultaMedioPago() throws SQLException{
-        
-        ArrayList<DatosEnvios> respuesta = new ArrayList<>();
-        Connection conexion = null;
-        JDBCUtilities conex = new JDBCUtilities();
-        
-        try{
-            conexion= conex.getConnection();
-            
-            String query = "SELECT id_envio FROM envio "
-                    + "ORDER BY id_envio DESC "
-                    + "LIMIT 1";
-            
-            PreparedStatement statement = conexion.prepareStatement(query);
-            ResultSet resultado = statement.executeQuery();
-            
-            while(resultado.next()){
-                DatosEnvios consulta = new DatosEnvios();
-                consulta.setId_envio(resultado.getInt(1));
                 
                 respuesta.add(consulta);
             }

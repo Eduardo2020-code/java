@@ -99,4 +99,37 @@ public class DatosPaquetesDao {
         }
         return respuesta;
     }
+    
+    public ArrayList<DatosPaquetes> datosEfectivo(){
+        
+        ArrayList<DatosPaquetes> respuesta = new ArrayList<>();
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+            
+            String query = "SELECT num_paq, valor_paq, "
+                    + "valor_imp, valor_seguro FROM paquete "
+                    + "WHERE id_envio IN (SELECT id_envio FROM envio "
+                    + "ORDER BY id_envio DESC LIMIT 1)";
+            
+            PreparedStatement statement = conexion.prepareStatement(query);
+            ResultSet resultado = statement.executeQuery();
+            
+            while(resultado.next()){
+                DatosPaquetes consulta = new DatosPaquetes();
+                consulta.setNum_paq(resultado.getInt(1));
+                consulta.setValor_paq(resultado.getInt(2));
+                consulta.setValor_imp(resultado.getInt(3));
+                consulta.setValor_seguro(resultado.getInt(4));
+                
+                respuesta.add(consulta);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }
+        return respuesta;
+    }
+    
 }

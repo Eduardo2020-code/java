@@ -35,7 +35,7 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
         
     }
     
-    public void registrarEmpleado(){
+    public void registrarSede(){
         
         DatosSedesDao c = new DatosSedesDao();
         
@@ -296,7 +296,7 @@ public class RegistroSedesGUI extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        registrarEmpleado();
+        registrarSede();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
