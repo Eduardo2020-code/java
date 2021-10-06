@@ -526,9 +526,14 @@ public final class TarjetaGUI extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
-        consulta.setVisible(true);
-        this.setVisible(false);
+        MedioPagoGUI medio;
+        try {
+            medio = new MedioPagoGUI();
+            this.setVisible(false);
+            medio.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(EfectivoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed

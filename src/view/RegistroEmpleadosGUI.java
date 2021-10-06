@@ -177,16 +177,12 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jTextField8 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         btnRegistrar1 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -206,6 +202,8 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         tfContrasenia = new javax.swing.JPasswordField();
         tfNombre = new javax.swing.JTextField();
         tfNum_cedula = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -245,16 +243,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
-
         btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         btnRegistrar.setText("Registrar Empleado");
@@ -266,11 +254,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         });
         jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 200, 50));
 
-        jLabel4.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel4.setText("Atrás");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, -1, -1));
-
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -281,10 +264,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         titulo1.setForeground(new java.awt.Color(238, 112, 82));
         titulo1.setText("REGISTRO DE EMPLEADO");
         jPanel2.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
-
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
         jLabel14.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(238, 112, 82));
@@ -301,11 +280,6 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnRegistrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 200, 50));
-
-        jLabel15.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel15.setText("Atrás");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(238, 112, 82));
@@ -409,6 +383,21 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         tfNum_cedula.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(tfNum_cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 170, 25));
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
+
+        jLabel4.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel4.setText("Atrás");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, -1, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
@@ -487,9 +476,7 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbId_sede;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;

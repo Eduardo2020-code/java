@@ -14,6 +14,7 @@ import model.dao.DatosPagosDao;
 import model.vo.DatosEnvios;
 import model.vo.DatosPagos;
 import view.ModificacionEmpleadosGUI;
+import view.paquete.MenuPaquetesGUI;
 /**
  *
  * @author usuario
@@ -198,9 +199,9 @@ public class MedioPagoGUI extends javax.swing.JFrame {
         lEfectivo1.setText("TARJETA");
         jPanel2.add(lEfectivo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 410));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -208,18 +209,36 @@ public class MedioPagoGUI extends javax.swing.JFrame {
     private void btnEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEfectivoActionPerformed
         medio_pago="Efectivo";
         registrarPago();
+        try {
+            EfectivoGUI efectivo = new EfectivoGUI();
+            this.setVisible(false);
+            efectivo.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MedioPagoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnEfectivoActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
-        consulta.setVisible(true);
+        MenuPaquetesGUI menu = new MenuPaquetesGUI();
         this.setVisible(false);
+        menu.setVisible(true);
+        
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarjetaActionPerformed
         medio_pago="Tarjeta";
         registrarPago();
+        TarjetaGUI tarjeta;
+        try {
+            tarjeta = new TarjetaGUI();
+            this.setVisible(false);
+            tarjeta.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MedioPagoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnTarjetaActionPerformed
 
     /**

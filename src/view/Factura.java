@@ -3,17 +3,98 @@
 package view;
 import java.awt.*;
 import java.awt.print.* ;
-import javax.swing.JOptionPane;
-import sun.nio.cs.ext.GB18030;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import model.dao.DatosPaquetesDao;
+import model.vo.DatosPaquetes;
 
 public class Factura extends javax.swing.JFrame implements Printable
 {
-
+    //Atributos
+    DefaultTableModel tPaquetes = new DefaultTableModel();
    
     public Factura() {
         initComponents();
+        mostrarPaquetes();
+        tfPagoNeto.setEditable(false);
+        tfImpuesto.setEditable(false);
+        tfSeguro.setEditable(false);
+        tfTotal.setEditable(false);
     }
 
+    
+    private void mostrarPaquetes() {
+        //Se defin el table model globalmente
+        int pago_neto=0;
+        int impuesto=0;
+        int seguro=0;
+        int total=0;
+        
+        //Se agregan las columnas de la tabla a mostrar
+        tPaquetes.addColumn("Id paquete");
+        tPaquetes.addColumn("Valor");
+        tPaquetes.addColumn("Valor Impuesto");
+        tPaquetes.addColumn("Valor Seguro");
+        
+        //Se setea el modelo
+        tablePaquetes.setModel(tPaquetes);
+        
+        //Se obtiene el numero de columnas
+        int numColumnas=tPaquetes.getColumnCount();
+        
+        //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
+        DatosPaquetesDao c = new DatosPaquetesDao();
+        
+        //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
+        ArrayList<DatosPaquetes> lista = c.datosFacturacion();
+        
+        //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
+        String[][] lista2 = formatoRegistrosPaquetes(lista);
+        
+        for(int i = 0; i<lista2.length;i++){
+            tPaquetes.addRow(lista2[i]);
+            pago_neto+=Integer.parseInt(lista2[i][1]);
+            impuesto+=Integer.parseInt(lista2[i][2]);
+            seguro+=Integer.parseInt(lista2[i][3]);
+            
+        }
+        
+        total=pago_neto+impuesto+seguro;
+           
+        //Se vuelve a setear para agregar los elementos de la BD
+        tablePaquetes.setModel(tPaquetes);
+        
+        tfPagoNeto.setText(String.valueOf(pago_neto));
+        tfImpuesto.setText(String.valueOf(impuesto));
+        tfSeguro.setText(String.valueOf(seguro));
+        tfTotal.setText(String.valueOf(total));
+        
+        
+    }
+    
+    
+    
+    public String[][] formatoRegistrosPaquetes(ArrayList<DatosPaquetes> consulta){
+        
+        //Declaración del contenedor de retorno
+        String[][] registros = new String[consulta.size()][4];        
+
+        //Desenvolver los objetos de la colección
+        for (int i = 0; i < consulta.size(); i++) {            
+            registros[i][0] = String.valueOf(consulta.get(i).getNum_paq());
+            registros[i][1] = String.valueOf(consulta.get(i).getValor_paq());
+            registros[i][2] = String.valueOf(consulta.get(i).getValor_imp());
+            registros[i][3] = String.valueOf(consulta.get(i).getValor_seguro());
+        }
+
+        //Retornar registros en formato JTable
+        return registros;
+
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,72 +106,31 @@ public class Factura extends javax.swing.JFrame implements Printable
 
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        tbImprimir = new javax.swing.JToggleButton();
-        tfUsuario3 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         titulo1 = new javax.swing.JLabel();
+        tfPagoNeto = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        tfTotal = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablePaquetes = new javax.swing.JTable();
+        tfSeguro = new javax.swing.JTextField();
+        tfImpuesto = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RAPPY ENVIOS");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(null);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 251, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setToolTipText("");
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Cliente:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Cant.", "Producto", "Prec. Unit", "Prec. Canti"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(45);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(70);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(70);
-        }
-
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 470, 100));
-
-        jPanel2.setLayout(null);
-        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 470, -1));
-
-        jLabel5.setText("GRACIAS POR TU COMPRA!!");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 170, -1));
-
-        tbImprimir.setText("IMPRIMIR");
-        tbImprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IMPRIME(evt);
-            }
-        });
-        jPanel3.add(tbImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, -1, -1));
-
-        tfUsuario3.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuario3.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuario3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        tfUsuario3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuario3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(tfUsuario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 170, 25));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 90));
@@ -99,51 +139,117 @@ public class Factura extends javax.swing.JFrame implements Printable
         titulo1.setForeground(new java.awt.Color(238, 112, 82));
         titulo1.setText("FACTURA RAPY ENVIOS");
         titulo1.setToolTipText("");
-        jPanel3.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 350, -1));
+        jPanel3.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 350, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2))
-        );
+        tfPagoNeto.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfPagoNeto.setForeground(new java.awt.Color(153, 153, 153));
+        tfPagoNeto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(tfPagoNeto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 170, 25));
+
+        jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel16.setText("Pago neto:");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel17.setText("Valor impuesto:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, -1, -1));
+
+        tfTotal.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfTotal.setForeground(new java.awt.Color(153, 153, 153));
+        tfTotal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(tfTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 170, 25));
+
+        jLabel19.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel19.setText("Total:");
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel18.setText("Valor seguro:");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, -1, -1));
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(440, 402));
+
+        tablePaquetes.setAutoCreateRowSorter(true);
+        tablePaquetes.setBackground(new java.awt.Color(255, 208, 164));
+        tablePaquetes.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tablePaquetes.setForeground(new java.awt.Color(238, 112, 82));
+        tablePaquetes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id paquete", "Valor", "Valor Impuesto", "Valor Seguro"
+            }
+        ));
+        tablePaquetes.setGridColor(new java.awt.Color(238, 112, 82));
+        tablePaquetes.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        tablePaquetes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablePaquetes);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 470, 70));
+
+        tfSeguro.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfSeguro.setForeground(new java.awt.Color(153, 153, 153));
+        tfSeguro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(tfSeguro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 170, 25));
+
+        tfImpuesto.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfImpuesto.setForeground(new java.awt.Color(153, 153, 153));
+        tfImpuesto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(tfImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 170, 25));
+
+        jLabel20.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel20.setText("GRACIAS POR PREFERIRNOS");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 410, -1, -1));
+
+        btnImprimir.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit-button.png"))); // NOI18N
+        btnImprimir.setText("Imprimir");
+        btnImprimir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 200, 50));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void IMPRIME(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMPRIME
-        tbImprimir.setVisible(false);
-        try
-            { 
-              PrinterJob  gap = PrinterJob.getPrinterJob();
-              gap.setPrintable(this);
-              boolean top = gap.printDialog();
-              if(top)
-                  { 
-                      gap.print();
-                  }
-            }
-        catch (PrinterException pex)
-            { 
-              
-            }
-    }//GEN-LAST:event_IMPRIME
-
-    private void tfUsuario3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuario3ActionPerformed
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfUsuario3ActionPerformed
+        btnImprimir.setVisible(false);
+        try
+        {
+            PrinterJob  gap = PrinterJob.getPrinterJob();
+            gap.setPrintable(this);
+            boolean top = gap.printDialog();
+            if(top)
+            {
+                gap.print();
+            }
+        }
+        catch (PrinterException pex)
+        {
+
+        }
+        this.setVisible(false);
+        try {
+            MenuPrincipalGUI menu = new MenuPrincipalGUI();
+            menu.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,16 +288,21 @@ public class Factura extends javax.swing.JFrame implements Printable
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JToggleButton tbImprimir;
-    private javax.swing.JTextField tfUsuario3;
+    private javax.swing.JTable tablePaquetes;
+    private javax.swing.JTextField tfImpuesto;
+    private javax.swing.JTextField tfPagoNeto;
+    private javax.swing.JTextField tfSeguro;
+    private javax.swing.JTextField tfTotal;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
 

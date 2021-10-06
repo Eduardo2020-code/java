@@ -14,6 +14,7 @@ import model.dao.DatosEnviosDao;
 import model.dao.DatosPaquetesDao;
 import model.vo.DatosEnvios;
 import model.vo.DatosPaquetes;
+import view.Factura;
 import view.ModificacionEmpleadosGUI;
 /**
  *
@@ -323,14 +324,23 @@ public final class EfectivoGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
-
+        Factura factura = new Factura();
+        this.setVisible(false);
+        factura.setVisible(true);
     }//GEN-LAST:event_btnPagoActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
-        consulta.setVisible(true);
-        this.setVisible(false);
+        MedioPagoGUI medio;
+        try {
+            medio = new MedioPagoGUI();
+            this.setVisible(false);
+            medio.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(EfectivoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed

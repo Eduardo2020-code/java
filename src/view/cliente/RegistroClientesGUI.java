@@ -329,9 +329,9 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
         });
         jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 200, 50));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -339,6 +339,9 @@ public class RegistroClientesGUI extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         registrarCliente();
+        InformacionClientesGUI cliente = new InformacionClientesGUI();
+        this.setVisible(false);
+        cliente.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void lAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lAtrasMouseClicked
